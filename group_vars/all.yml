@@ -1,0 +1,2 @@
+---
+location: "{{ Parent_Location }}/roles/create_config/files/"

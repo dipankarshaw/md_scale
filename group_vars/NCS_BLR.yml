@@ -1,0 +1,131 @@
+---
+colon: ":"
+FF_start_evi_ID: 1400
+FF_end_evi_ID: 1401
+dist: "{{ FF_end_evi_ID|int - FF_start_evi_ID }}"
+CCM_interval: 10s
+remove_files: true
+location: "{{ Parent_Location }}/roles/create_config/files/"
+ANE_ID: "{{ site_list[0].name}}"
+BNE_ID: "{{ site_list[1].name}}"
+CNE_ID: "{{ site_list[2].name}}"
+MAC_LIMIT: 100
+BD_MTU: 1500
+MAC_FLOOD_ACTION: 'no-flood'
+# applicable values are no-flood, flood, shutdown
+SERVICE_NAME: "{{ ANE_ID }}-{{ BNE_ID }}-{{ CNE_ID }}"
+#Possible values of CCM_required is y or n
+CCM_REQUIRED: 'y'
+DM_SL_REQUIRED: 'NO'
+#Possible values of Flat_QOS is YES or NO
+QOS_REQUIRED: 'YES'
+Flat_QOS: 'YES'
+H_QOS: 'NO'
+ingress_policy1: 
+  PARENT: P2P_PARENT_HQOS_INGRESS_DIP
+  SHAPE: 100
+  CHILD: P2P_CHILD_HQOS_INGRESS_DIP
+  PREMIUM_PERCENT: 15
+  B1_PERCENT: 15
+  B2_PERCENT: 20
+  B3_PERCENT: 20
+  STANDARD_PERCENT: 30  
+  PREMIUM_QOSG: 5
+  PREMIUM_TC: 6
+  B1_QOSG: 3
+  B1_TC: 5
+  B2_QOSG: 2
+  B2_TC: 4
+  B3_QOSG: 1
+  B3_TC: 3
+  STANDARD_QOSG: 4
+  STANDARD_TC: 2
+
+eggress_policy1:
+  PARENT: P2P_PARENT_HQOS_EGGRESS_DIP
+  SHAPE: 10
+  CHILD: P2P_CHILD_HQOS_EGGRESS_DIP
+  PREMIUM_PERCENT: 15
+  B1_PERCENT: 15  
+  B2_PERCENT: 20
+  B3_PERCENT: 20
+  STANDARD_PERCENT: 20
+
+ingress_policy_flatQOS:
+  marker_shaper_policy: BW-1000000Kbps-Class-B2-TG_DIP
+  Police_rate: 1000000
+  TC: 4
+  QOSG: 2
+
+eggress_policy_flatQOS:
+  marker_policy: NNI-QOS-EGRESS-InnerCoS_DIP
+  marker_policy_Premium_MatchQOS: 5
+  marker_policy_Premium_SETCOS: 5
+  marker_policy_B1_MatchQOS: 3
+  marker_policy_B1_SETCOS: 3
+  marker_policy_B2_MatchQOS: 2
+  marker_policy_B2_SETCOS: 2
+  marker_policy_B3_MatchQOS: 1
+  marker_policy_B3_SETCOS: 1
+  marker_policy_standard_CIR_MatchQOS: 4
+  marker_policy_standard_CIR_SETCOS: 4
+  marker_policy_standard_EIR_MatchQOS: 7
+  marker_policy_standard_EIR_SETCOS: 7
+  marker_policy_NC_MatchQOS: 6
+  marker_policy_NC_SETCOS: 6
+  shaper_policy: SHAPE-1000000Kbps-Class-B2-GE_DIP
+  Police_rate: 1000000
+job:
+ - create_service
+ - delete_service
+ - create_policy
+ - delete_policy
+ - create_ELAN_service
+ - delete_ELAN_service
+create_xc_service_job:
+ - create_policy
+ - create_service
+
+create_ELAN_service_job:
+ - create_policy
+ - create_ELAN_service
+
+delete_xc_service_job:
+  - delete_service
+delete_ELAN_service_job:
+  - delete_ELAN_service
+delete_policy_job:
+  - delete_policy
+napalm_provider:
+  hostname: '{{ ansible_host }}'
+  username: '{{ ansible_ssh_user }}'
+  dev_os: '{{ ansible_network_os }}'
+  password: '{{ ansible_ssh_pass }}'
+site_list:
+ -  name: AR5
+    end: Aend
+    main_interface: TenGigE0/0/1/3/2
+    local_MEP: 1
+    remote_MEP: 2
+    remote_MEP1: 2
+    remote_MEP2: 3
+    ESI_ID: 00.00.00.00.00.05.05.05.05
+    port_type: 'Y-type'
+ -  name: AR6
+    end: Bend
+    main_interface: TenGigE0/0/0/19
+    local_MEP: 2
+    remote_MEP: 1
+    remote_MEP1: 1
+    remote_MEP2: 3
+    ESI_ID: 00.00.00.00.00.06.06.06.06
+    port_type: 'Y-type'
+ -  name: AR14
+    end: Cend
+    main_interface: GigabitEthernet0/0/0/4
+    local_MEP: 3
+    remote_MEP1: 1
+    remote_MEP2: 2
+    ESI_ID: 00.00.00.00.00.14.14.14.14
+    port_type: 'Y-type'
+# applicable port Type values are 'Y-type,X-type,P-type,F-type'

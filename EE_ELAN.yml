@@ -1,0 +1,86 @@
+---
+- name:
+  hosts: NCS_BLR,localhost
+  gather_facts: false
+  tags: create_config,create_service,delete_service,config_policy,delete_policy,test
+  vars:
+    Parent_Location: 'absent'
+  tasks:
+  - block:
+      - shell:
+          cmd: pwd
+        register: locator 
+      - set_fact:
+          Parent_Location: "{{ locator.stdout }}"
+    run_once: true
+    delegate_to: "localhost"
+
+- hosts: NCS_BLR
+  gather_facts: False
+  roles:
+    - create_config
+- name:
+  hosts: NCS_BLR
+  connection: network_cli
+  gather_facts: false
+  tasks:
+  - name: "Configure the Nodes"
+    napalm_install_config:
+      config_file: "{{ location }}{{ item.1 }}_{{ item.0.name }}.cfg"
+      provider: "{{ napalm_provider }}"
+      commit_changes: True
+      replace_config: False
+    loop: "{{ site_list|product(create_service_job)|list }}"
+    when: item.0.name == local_hostname
+    loop_control:
+      label: "{{ item.0.name }} and {{ item.1 }}"
+    tags: create_service
+    
+  - name: "Delete the configuration from the Nodes"
+    napalm_install_config:
+      config_file: "{{ location }}{{ item.1 }}_{{ item.0.name }}.cfg"
+      provider: "{{ napalm_provider }}"
+      commit_changes: True
+      replace_config: False
+    loop: "{{ site_list|product(delete_service_job)|list }}"
+    when: item.0.name == local_hostname
+    loop_control:
+      label: "{{ item.0.name }} and {{ item.1 }}"
+    tags: delete_service
+
+  - name: "Delete policy from the Nodes"
+    napalm_install_config:
+      config_file: "{{ location }}{{ item.1 }}_{{ item.0.name }}.cfg"
+      provider: "{{ napalm_provider }}"
+      commit_changes: True
+      replace_config: False
+    loop: "{{ site_list|product(delete_policy_job)|list }}"
+    when: item.0.name == local_hostname
+    loop_control:
+      label: "{{ item.0.name }} and {{ item.1 }}"
+    tags: delete_policy
+
+# - name: delete files
+#   hosts: localhost
+#   gather_facts: no
+#   tasks:
+#   - shell: |
+#       cd {{ location }}
+#       rm -rf *.cfg 
+#     tags: create_config,create_service,delete_service,config_policy,delete,delete_policy
+
+# - name: "verify configured services"
+#   hosts: NCS_BLR
+#   connection: network_cli
+#   gather_facts: false
+#   tags: verify_service
+#   tasks:
+#   - name: "verify the status of configuration"
+#     iosxr_command:
+#       commands: 
+#         - 'show evpn evi neighbor'
+#         - 'show l2vpn bridge-domain summary'
+#     register: output
+#   - debug:
+#       var: output.stdout_lines
+...

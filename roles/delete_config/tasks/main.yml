@@ -1,0 +1,6 @@
+---
+# tasks file for Dansi/jinja/roles/delete_config
+- shell:
+        cmd: "{{Parent_Location}}/roles/delete_config/files/linux_commands.sh"
+  tags: create_config,delete_config,delete_service,create_service
+

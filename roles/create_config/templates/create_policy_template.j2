@@ -1,0 +1,254 @@
+{% if side == 'Aend','Bend','Cend' -%}
+{% for item in range(FF_start_evi_ID,FF_end_evi_ID) -%}
+{% if QOS_REQUIRED == 'YES'and Flat_QOS == 'YES'%}
+policy-map {{ eggress_policy_flatQOS.shaper_policy }}
+ class B2-TC4-Egress_DIP
+  shape average {{ eggress_policy_flatQOS.Police_rate }} kbps
+ !
+ class class-default
+ !
+ end-policy-map
+!
+class-map match-any B2-TC4-Egress_DIP
+ match traffic-class 4
+ end-class-map
+!
+policy-map {{ ingress_policy_flatQOS.marker_shaper_policy }}
+ class BUSINESS2-PCP-2_DIP
+  police rate {{ ingress_policy_flatQOS.Police_rate }} kbps burst 1100 kbytes
+  !
+  set traffic-class {{ ingress_policy_flatQOS.TC }}
+  set qos-group {{ ingress_policy_flatQOS.QOSG }}
+ !
+ class class-default
+ !
+ end-policy-map
+!
+class-map match-any BUSINESS2-PCP-2_DIP
+ match cos 2
+ end-class-map
+!
+policy-map {{ eggress_policy_flatQOS.marker_policy}}
+ class Premium-MatchQOS
+  set cos {{ eggress_policy_flatQOS.marker_policy_Premium_SETCOS }}
+ !
+ class Business1-MatchQOS
+  set cos {{ eggress_policy_flatQOS.marker_policy_B1_SETCOS }}
+ !
+ class Business2-MatchQOS
+  set cos {{ eggress_policy_flatQOS.marker_policy_B2_SETCOS }}
+ !
+ class Business3-MatchQOS
+  set cos {{ eggress_policy_flatQOS.marker_policy_B3_SETCOS }}
+ !
+ class Standard-CIR-MatchQOS
+  set cos {{ eggress_policy_flatQOS.marker_policy_standard_CIR_SETCOS }}
+ !
+ class Standard-EIR-MatchQOS
+  set cos {{ eggress_policy_flatQOS.marker_policy_standard_EIR_SETCOS }}
+ !
+ class NC-MatchQOS
+  set cos {{ eggress_policy_flatQOS.marker_policy_NC_SETCOS }}
+ !
+ class class-default
+  set cos 0
+ !
+ end-policy-map
+!
+class-map match-any Business2-MatchQOS
+ match qos-group {{ eggress_policy_flatQOS.marker_policy_B2_MatchQOS }}
+ end-class-map
+!
+class-map match-any Business1-MatchQOS
+ match qos-group {{ eggress_policy_flatQOS.marker_policy_B1_MatchQOS }}
+ end-class-map
+!
+class-map match-any Premium-MatchQOS
+ match qos-group {{ eggress_policy_flatQOS.marker_policy_Premium_MatchQOS }}
+ end-class-map
+!
+class-map match-any Business3-MatchQOS
+ match qos-group {{ eggress_policy_flatQOS.marker_policy_B3_MatchQOS }}
+ end-class-map
+!
+class-map match-any Standard-CIR-MatchQOS
+ match qos-group {{ eggress_policy_flatQOS.marker_policy_standard_CIR_MatchQOS }}
+ end-class-map
+!
+class-map match-any NC-MatchQOS
+ match qos-group {{ eggress_policy_flatQOS.marker_policy_NC_MatchQOS}}
+ end-class-map
+!
+{% elif QOS_REQUIRED == 'YES'and H_QOS == 'YES' -%}
+policy-map {{ ingress_policy1.PARENT }}
+ class class-default
+  service-policy {{ ingress_policy1.CHILD }}
+  police rate percent {{ ingress_policy1.SHAPE }}
+  !
+ !
+ end-policy-map
+!
+policy-map {{ ingress_policy1.CHILD }}
+ class PREMIUM-PCP-5-7_DIP
+  police rate percent {{ ingress_policy1.PREMIUM_PERCENT }} burst 50 kbytes
+  !
+  set qos-group {{ ingress_policy1.PREMIUM_QOSG }}
+  set traffic-class {{ ingress_policy1.PREMIUM_TC }}
+ !
+ class BUSINESS2-PCP-2_DIP
+  police rate percent {{ ingress_policy1.B2_PERCENT }} burst 200 kbytes peak-rate percent 100 peak-burst 400 kbytes
+  !
+  set qos-group {{ ingress_policy1.B2_QOSG }}
+  set traffic-class {{ ingress_policy1.B2_TC }}
+ !
+ class BUSINESS3-PCP-1_DIP
+  police rate percent {{ ingress_policy1.B3_PERCENT }} burst 500 kbytes peak-rate percent 100 peak-burst 1000 kbytes
+  !
+  set qos-group {{ ingress_policy1.B3_QOSG }}
+  set traffic-class {{ ingress_policy1.B3_TC }}
+ !
+ class BUSINESS1-PCP-3_DIP
+  police rate percent {{ ingress_policy1.B1_PERCENT }} burst 60 bytes peak-rate percent 30 peak-burst 100 kbytes
+  !
+  set traffic-class {{ ingress_policy1.B1_TC }}
+  set qos-group {{ ingress_policy1.B1_QOSG }}
+ !
+ class standard-PCP-4_0_DIP
+  police rate percent {{ ingress_policy1.STANDARD_PERCENT }} burst 500 kbytes peak-rate percent 100
+  !
+  set qos-group {{ ingress_policy1.STANDARD_QOSG }}
+  set traffic-class {{ ingress_policy1.STANDARD_TC }}
+ !
+ end-policy-map
+!
+class-map match-any PREMIUM-PCP-5-7_DIP
+ match cos 5 6 7
+ end-class-map
+!
+class-map match-any BUSINESS1-PCP-3_DIP
+ match cos 3
+ end-class-map
+!
+class-map match-any BUSINESS2-PCP-2_DIP
+ match cos 2
+ end-class-map
+!
+class-map match-any BUSINESS3-PCP-1_DIP
+ match cos 1
+ end-class-map
+!
+class-map match-any standard-PCP-4_0_DIP
+ match cos 4 0
+ end-class-map
+!
+policy-map {{ eggress_policy1.PARENT }}
+ class class-default
+  service-policy {{ eggress_policy1.CHILD }}
+  shape average percent {{ eggress_policy1.SHAPE }}
+ !
+ end-policy-map
+!
+policy-map {{ eggress_policy1.CHILD }}
+ class Premium-TC6-Egress
+  priority level 1
+  shape average percent {{ eggress_policy1.PREMIUM_PERCENT }}
+  queue-limit 500 kbytes
+ !
+ class Business1-TC5-Egress
+  priority level 2
+  shape average percent {{ eggress_policy1.B1_PERCENT }}
+  queue-limit 500 kbytes
+ !
+ class Business2-TC4-Egress
+  bandwidth percent {{ eggress_policy1.B2_PERCENT }}
+  random-detect 5100 kbytes 6000 kbytes
+ !
+ class Business3-TC3-Egress
+  bandwidth percent {{ eggress_policy1.B3_PERCENT }}
+  random-detect 12750 kbytes 15000 kbytes
+ !
+ class Standard-CIR-TC2-Egress
+  bandwidth percent {{ eggress_policy1.STANDARD_PERCENT }}
+  random-detect 3500 kbytes 5000 kbytes
+ !
+ class class-default
+ !
+ end-policy-map
+!
+class-map match-any Premium-TC6-Egress
+ match traffic-class 6
+ end-class-map
+!
+class-map match-any Business1-TC5-Egress
+ match traffic-class 5
+ end-class-map
+!
+class-map match-any Business2-TC4-Egress
+ match traffic-class 4
+ end-class-map
+!
+class-map match-any Business3-TC3-Egress
+ match traffic-class 3
+ end-class-map
+!
+class-map match-any Standard-CIR-TC2-Egress
+ match traffic-class 2
+ end-class-map
+!
+policy-map {{ eggress_policy_flatQOS.marker_policy}}
+ class Premium-MatchQOS
+  set cos {{ eggress_policy_flatQOS.marker_policy_Premium_SETCOS }}
+ !
+ class Business1-MatchQOS
+  set cos {{ eggress_policy_flatQOS.marker_policy_B1_SETCOS }}
+ !
+ class Business2-MatchQOS
+  set cos {{ eggress_policy_flatQOS.marker_policy_B2_SETCOS }}
+ !
+ class Business3-MatchQOS
+  set cos {{ eggress_policy_flatQOS.marker_policy_B3_SETCOS }}
+ !
+ class Standard-CIR-MatchQOS
+  set cos {{ eggress_policy_flatQOS.marker_policy_standard_CIR_SETCOS }}
+ !
+ class Standard-EIR-MatchQOS
+  set cos {{ eggress_policy_flatQOS.marker_policy_standard_EIR_SETCOS }}
+ !
+ class NC-MatchQOS
+  set cos {{ eggress_policy_flatQOS.marker_policy_NC_SETCOS }}
+ !
+ class class-default
+  set cos 0
+ !
+ end-policy-map
+!
+class-map match-any Business2-MatchQOS
+ match qos-group {{ eggress_policy_flatQOS.marker_policy_B2_MatchQOS }}
+ end-class-map
+!
+class-map match-any Business1-MatchQOS
+ match qos-group {{ eggress_policy_flatQOS.marker_policy_B1_MatchQOS }}
+ end-class-map
+!
+class-map match-any Premium-MatchQOS
+ match qos-group {{ eggress_policy_flatQOS.marker_policy_Premium_MatchQOS }}
+ end-class-map
+!
+class-map match-any Business3-MatchQOS
+ match qos-group {{ eggress_policy_flatQOS.marker_policy_B3_MatchQOS }}
+ end-class-map
+!
+class-map match-any Standard-CIR-MatchQOS
+ match qos-group {{ eggress_policy_flatQOS.marker_policy_standard_CIR_MatchQOS }}
+ end-class-map
+!
+class-map match-any NC-MatchQOS
+ match qos-group {{ eggress_policy_flatQOS.marker_policy_NC_MatchQOS}}
+ end-class-map
+!
+{% else -%}
+{% endif -%}
+{% endfor -%}
+{% else -%}
+ this is me
+{% endif %}

@@ -1,0 +1,36 @@
+{% if side == 'Aend' -%}
+{% for item in range(FF_start_evi_ID,FF_end_evi_ID) -%}
+no interface {{ site_list[0].main_interface }}.{{ item }}
+no l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }}
+no evpn evi {{ 40000 + item|int }}
+{% if CCM_REQUIRED == 'y'%}
+ethernet cfm domain COLT-1 level 1 id null
+no service {{ SERVICE_NAME }}-DIP-FFCC-{{ item }}
+{% else -%}
+{% endif -%}
+{% endfor -%}
+{% elif side == 'Bend' -%}
+{% for item in range(FF_start_evi_ID,FF_end_evi_ID) -%}
+no interface {{ site_list[1].main_interface }}.{{ item }}
+no l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }}
+no evpn evi {{ 40000 + item|int }}
+{% if CCM_REQUIRED == 'y'%}
+ethernet cfm domain COLT-1 level 1 id null
+no service {{ SERVICE_NAME }}-DIP-FFCC-{{ item }}
+{% else -%}
+{% endif -%}
+{% endfor -%}
+{% elif side == 'Cend' -%}
+{% for item in range(FF_start_evi_ID,FF_end_evi_ID) -%}
+no interface {{ site_list[2].main_interface }}.{{ item }}
+no l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }}
+no evpn evi {{ 40000 + item|int }}
+{% if CCM_REQUIRED == 'y'%}
+ethernet cfm domain COLT-1 level 1 id null
+no service {{ SERVICE_NAME }}-DIP-FFCC-{{ item }}
+{% else -%}
+{% endif -%}
+{% endfor -%}
+{% else -%}
+ this is me
+{% endif %}

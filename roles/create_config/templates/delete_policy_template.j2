@@ -1,0 +1,25 @@
+{% if side == 'Aend','Bend','Cend' -%}
+{% for item in range(FF_start_evi_ID,FF_end_evi_ID) -%}
+{% if QOS_REQUIRED == 'YES'and Flat_QOS == 'YES'%}
+no policy-map {{ ingress_policy_flatQOS.marker_shaper_policy }}
+no policy-map {{ eggress_policy_flatQOS.shaper_policy }}
+no policy-map {{ eggress_policy_flatQOS.marker_policy }}
+no class-map B2-TC4-Egress_DIP
+no class-map BUSINESS2-PCP-2_DIP
+{% elif QOS_REQUIRED == 'YES'and H_QOS == 'YES' -%}
+no policy-map {{ ingress_policy1.PARENT }}
+no policy-map {{ eggress_policy1.PARENT }}
+no policy-map {{ ingress_policy1.CHILD }}
+no policy-map {{ eggress_policy1.CHILD }}
+no policy-map {{ eggress_policy_flatQOS.marker_policy }}
+no class-map PREMIUM-PCP-5-7_DIP
+no class-map BUSINESS2-PCP-2_DIP
+no class-map BUSINESS3-PCP-1_DIP
+no class-map BUSINESS1-PCP-3_DIP
+no class-map standard-PCP-4_0_DIP
+{% else -%}
+{% endif -%}
+{% endfor -%}
+{% else -%}
+ this is me
+{% endif %}
