@@ -33,7 +33,7 @@
     loop: "{{ site_list|product(create_ELAN_service_job)|list }}"
     when: item.0.name == local_hostname
     loop_control:
-      label: "{{ item.0.name }} and {{ item.1 }} from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }} with Flat_QOS {{ Flat_QOS }}, HQOS {{ H_QOS }}, CCM {{ CCM_REQUIRED }}, DM_SL {{ DM_SL_REQUIRED }}"
+      label: "{{ item.0.name }} and {{ item.1 }} ELAN Create from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }}"
     tags: create_ELAN_service
     
   - name: "Delete the configuration from the Nodes"
@@ -45,7 +45,7 @@
     loop: "{{ site_list|product(delete_ELAN_service_job)|list }}"
     when: item.0.name == local_hostname
     loop_control:
-      label: "{{ item.0.name }} and {{ item.1 }} from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }} with Flat_QOS {{ Flat_QOS }}, HQOS {{ H_QOS }}, CCM {{ CCM_REQUIRED }}, DM_SL {{ DM_SL_REQUIRED }}"
+      label: "{{ item.0.name }} and {{ item.1 }} ELAN delete from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }}"
     tags: delete_ELAN_service
 
   - name: "Delete policy from the Nodes"
@@ -57,7 +57,7 @@
     loop: "{{ site_list|product(delete_policy_job)|list }}"
     when: item.0.name == local_hostname
     loop_control:
-      label: "{{ item.0.name }} and {{ item.1 }} from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }} with Flat_QOS {{ Flat_QOS }}, HQOS {{ H_QOS }}, CCM {{ CCM_REQUIRED }}, DM_SL {{ DM_SL_REQUIRED }}"
+      label: "{{ item.0.name }} and {{ item.1 }} from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }}"
     tags: delete_policy
 
 - name:
@@ -74,7 +74,7 @@
     loop: "{{ site_list|product(create_xc_service_job)|list }}"
     when: item.0.name == local_hostname
     loop_control:
-      label: "{{ item.0.name }} and {{ item.1 }} from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }} with Flat_QOS {{ Flat_QOS }}, HQOS {{ H_QOS }}, CCM {{ CCM_REQUIRED }}, DM_SL {{ DM_SL_REQUIRED }}"
+      label: "{{ item.0.name }} and {{ item.1 }} XC service create from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }}"
     tags: create_xc_service
     
   - name: "Delete the configuration from the Nodes"
@@ -86,17 +86,17 @@
     loop: "{{ site_list|product(delete_xc_service_job)|list }}"
     when: item.0.name == local_hostname
     loop_control:
-      label: "{{ item.0.name }} and {{ item.1 }} from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }} with Flat_QOS {{ Flat_QOS }}, HQOS {{ H_QOS }}, CCM {{ CCM_REQUIRED }}, DM_SL {{ DM_SL_REQUIRED }}"
+      label: "{{ item.0.name }} and {{ item.1 }} XC service delete from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }}"
     tags: delete_xc_service
 
-# - name: delete files
-#   hosts: localhost
-#   gather_facts: no
-#   tasks:
-#   - shell: |
-#       cd {{ location }}
-#       rm -rf *.cfg 
-#     tags: create_config,create_service,delete_service,config_policy,delete,delete_policy
+- name: delete files
+  hosts: localhost
+  gather_facts: no
+  tasks:
+  - shell: |
+      cd {{ location }}
+      rm -rf *.cfg 
+    tags: create_config,create_service,delete_service,config_policy,delete,delete_policy
 
 - name: "verify configured services"
   hosts: NCS_BLR

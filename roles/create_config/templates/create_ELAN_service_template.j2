@@ -47,7 +47,6 @@ interface {{ site_list[0].main_interface }}.{{ item }} l2transport ethernet cfm 
 interface {{ site_list[0].main_interface }}.{{ item }} l2transport ethernet cfm mep domain COLT-1 service {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} mep-id {{ site_list[0].local_MEP }} sla operation profile SLM2 target mep-id {{ site_list[0].remote_MEP1 }}
 interface {{ site_list[0].main_interface }}.{{ item }} l2transport ethernet cfm mep domain COLT-1 service {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} mep-id {{ site_list[0].local_MEP }} sla operation profile SLM2 target mep-id {{ site_list[0].remote_MEP2 }}
 {% else -%}
-wtf
 {% endif -%}
 {% endfor -%}
 {% elif side == 'Bend' -%}
@@ -95,7 +94,6 @@ ethernet cfm domain COLT-1 level 1 id null service {{ SERVICE_NAME }}-DIP-FFCC-{
 ethernet cfm domain COLT-1 level 1 id null service {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} id icc-based LE {{ item }}FF log continuity-check mep changes
 interface {{ site_list[1].main_interface }}.{{ item }} l2transport ethernet cfm mep domain COLT-1 service {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} mep-id {{ site_list[1].local_MEP }} cos 2
 {% else -%}
-wht
 {% endif -%}
 {% endfor -%}
 {% elif side == 'Cend' -%}
