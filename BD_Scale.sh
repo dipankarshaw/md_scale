@@ -9,14 +9,17 @@ echo "
 	+ FLAT QOS uses Egress Marking Policy QOS_NNI_egress.
 	+ Flat QOS uses Egress Shaping Policy ( Parent + child)
 	+ CCM is Enabled.
-+ Create 50 Xconnect services with FLAT QOS, CCM, DM,SL.
++ Create 100 Xconnect services with FLAT QOS, CCM, DM,SL.
 	+ Flat QOS has earlier Attributes.
+    + CCM is enabled.
 	+ DM & SLM is enabled.
 + Check the no of ELAN and XC services.
 + Delete ELAN services.
 + Delete X connect Services.
 + Delete HQOS Policy
-+ Delete FLAT QOS Policy 
++ Delete FLAT QOS Policy
+
+** intotal creates 50 ELAN and 150 Xconnect
 
 ++ ELAN Service sample Config : 
 *******************************************************************************************
