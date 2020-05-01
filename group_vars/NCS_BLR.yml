@@ -1,9 +1,9 @@
 ---
 colon: ":"
 FF_start_evi_ID: 1400
-FF_end_evi_ID: 1401
+FF_end_evi_ID: 1405
 dist: "{{ FF_end_evi_ID|int - FF_start_evi_ID }}"
-CCM_interval: 10s
+CCM_interval: 1s
 remove_files: true
 location: "{{ Parent_Location }}/roles/create_config/files/"
 ANE_ID: "{{ site_list[0].name}}"

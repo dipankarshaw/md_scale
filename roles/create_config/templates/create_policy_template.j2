@@ -1,5 +1,4 @@
 {% if side == 'Aend','Bend','Cend' -%}
-{% for item in range(FF_start_evi_ID,FF_end_evi_ID) -%}
 {% if QOS_REQUIRED == 'YES'and Flat_QOS == 'YES'%}
 policy-map {{ eggress_policy_flatQOS.shaper_policy }}
  class B2-TC4-Egress_DIP
@@ -248,7 +247,6 @@ class-map match-any NC-MatchQOS
 !
 {% else -%}
 {% endif -%}
-{% endfor -%}
 {% else -%}
  this is me
 {% endif %}
