@@ -109,6 +109,7 @@
       commands: 
         - 'show l2vpn xconnect summary'
         - 'show l2vpn bridge-domain summary'
+        - 'show policy-map targets summary'
     register: output
   - debug:
       var: output.stdout_lines
