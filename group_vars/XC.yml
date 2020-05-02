@@ -22,7 +22,7 @@ Flat_QOS: 'YES'
 H_QOS: 'NO'
 ingress_policy1: 
   PARENT: P2P_PARENT_HQOS_INGRESS_DIP
-  SHAPE: 1
+  SHAPE: 100
   CHILD: P2P_CHILD_HQOS_INGRESS_DIP
   PREMIUM_PERCENT: 15
   B1_PERCENT: 15
@@ -42,7 +42,7 @@ ingress_policy1:
 
 eggress_policy1:
   PARENT: P2P_PARENT_HQOS_EGGRESS_DIP
-  SHAPE: 1
+  SHAPE: 10
   CHILD: P2P_CHILD_HQOS_EGGRESS_DIP
   PREMIUM_PERCENT: 15
   B1_PERCENT: 15  
@@ -81,14 +81,9 @@ job:
  - delete_policy
  - create_ELAN_service
  - delete_ELAN_service
- - create_XC_service_CORE1
- - delete_XC_service_CORE1
 create_xc_service_job:
  - create_policy
  - create_service
-
-create_xc_service_CORE1_job:
- - create_XC_service_CORE1
 
 create_ELAN_service_job:
  - create_policy
@@ -96,11 +91,6 @@ create_ELAN_service_job:
 
 delete_xc_service_job:
   - delete_service
-
-
-delete_xc_service_CORE1_job:
-  - delete_XC_service_CORE1
-
 delete_ELAN_service_job:
   - delete_ELAN_service
 delete_policy_job:
@@ -113,8 +103,7 @@ napalm_provider:
 site_list:
  -  name: AR13
     end: Aend
-    main_interface: GigabitEthernet0/0/0/11
-    main_interface1: TenGigE0/0/1/5/0
+    main_interface: TenGigE0/0/1/5/0
     # connected to spirent 11/6
     local_MEP: 1
     remote_MEP: 2
@@ -122,8 +111,7 @@ site_list:
     port_type: 'Y-type'
  -  name: AR14
     end: Bend
-    main_interface: GigabitEthernet0/0/0/11
-    main_interface1: TenGigE0/0/1/5/0
+    main_interface: TenGigE0/0/1/5/0
     # connected to spirent 11/10
     local_MEP: 2
     remote_MEP: 1

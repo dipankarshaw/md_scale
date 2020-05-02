@@ -10,6 +10,6 @@
     label: "{{ item.0.name }} and {{ item.1 }} create Config from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }}"
   delegate_to: "localhost"
   run_once: true
-  tags: create_config,create_xc_service,create_ELAN_service,delete_xc_service,delete_ELAN_service,config_policy,delete_policy
+  tags: create_config,create_xc_service,create_ELAN_service,delete_xc_service,delete_ELAN_service,config_policy,delete_policy,delete_xc_service_CORE1,create_xc_service_CORE1
 # tasks file for /root/Dansi/jinja/roles/create_config
 # dfre1

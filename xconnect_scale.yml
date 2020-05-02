@@ -1,8 +1,8 @@
 ---
-- name:
+- name: get the location of Operation
   hosts: NCS_BLR,localhost
   gather_facts: false
-  tags: create_config,create_xc_service,create_ELAN_service,delete_xc_service,delete_ELAN_service,config_policy,delete_policy,test
+  tags: create_config,create_xc_service,create_ELAN_service,delete_xc_service,delete_ELAN_service,config_policy,delete_policy,test,delete_xc_service_CORE1,create_xc_service_CORE1
   vars:
     Parent_Location: 'absent'
   tasks:
@@ -19,7 +19,8 @@
   gather_facts: False
   roles:
     - create_config
-- name:
+
+- name: ELAN service Creation
   hosts: NCS_BLR
   connection: network_cli
   gather_facts: false
@@ -60,8 +61,37 @@
       label: "{{ item.0.name }} and {{ item.1 }} from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }}"
     tags: delete_policy
 
-- name:
-  hosts: NCS_BLR_XC
+- name: XC service Creation
+  hosts: NCS_BLR
+  connection: network_cli
+  gather_facts: false
+  tasks: 
+  - name: "Configure the Nodes"
+    napalm_install_config:
+      config_file: "{{ location }}{{ item.1 }}_{{ item.0.name }}.cfg"
+      provider: "{{ napalm_provider }}"
+      commit_changes: True
+      replace_config: False
+    loop: "{{ site_list|product(create_xc_service_CORE1_job)|list }}"
+    when: item.0.name == local_hostname
+    loop_control:
+      label: "{{ item.0.name }} and {{ item.1 }} XC service create from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }}"
+    tags: create_xc_service_CORE1
+    
+  - name: "Delete the configuration from the Nodes"
+    napalm_install_config:
+      config_file: "{{ location }}{{ item.1 }}_{{ item.0.name }}.cfg"
+      provider: "{{ napalm_provider }}"
+      commit_changes: True
+      replace_config: False
+    loop: "{{ site_list|product(delete_xc_service_CORE1_job)|list }}"
+    when: item.0.name == local_hostname
+    loop_control:
+      label: "{{ item.0.name }} and {{ item.1 }} XC service delete from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }}"
+    tags: delete_xc_service_CORE1
+
+- name: XC service Creation
+  hosts: NCS_BLR
   connection: network_cli
   gather_facts: false
   tasks: 
@@ -96,7 +126,7 @@
   - shell: |
       cd {{ location }}
       rm -rf *.cfg 
-    tags: create_config,create_service,delete_service,config_policy,delete,delete_policy
+    tags: create_config,create_xc_service,create_ELAN_service,delete_xc_service,delete_ELAN_service,config_policy,delete_policy,delete_xc_service_CORE1,create_xc_service_CORE1
 
 - name: "verify configured services"
   hosts: NCS_BLR
@@ -109,7 +139,6 @@
       commands: 
         - 'show l2vpn xconnect summary'
         - 'show l2vpn bridge-domain summary'
-        - 'show policy-map targets summary'
     register: output
   - debug:
       var: output.stdout_lines

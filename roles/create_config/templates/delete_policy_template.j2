@@ -1,4 +1,4 @@
-{% if side == 'Aend','Bend','Cend' -%}
+{% if side == 'Aend','Bend' -%}
 {% if QOS_REQUIRED == 'YES'and Flat_QOS == 'YES'%}
 no policy-map {{ ingress_policy_flatQOS.marker_shaper_policy }}
 no policy-map {{ eggress_policy_flatQOS.shaper_policy }}
