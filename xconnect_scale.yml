@@ -128,6 +128,16 @@
       rm -rf *.cfg 
     tags: create_config,create_xc_service,create_ELAN_service,delete_xc_service,delete_ELAN_service,config_policy,delete_policy,delete_xc_service_CORE1,create_xc_service_CORE1
 
+- name: spient
+  hosts: localhost
+  gather_facts: no
+  tags: spirent
+  tasks:
+  - shell: |
+      cd /spirent_traffic
+      python3 dip2.py
+    register: ouput
+  - debug: var=output
 - name: "verify configured services"
   hosts: NCS_BLR
   connection: network_cli

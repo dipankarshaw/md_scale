@@ -3,6 +3,10 @@
 no interface {{ site_list[0].main_interface }}.{{ item }}
 no l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }}
 no evpn evi {{ 40000 + item|int }}
+{% if site_list[0].ESI_ID == '00.00.00.00.00.00.00.00.00'%}
+{% else -%}
+no evpn interface {{ site_list[0].main_interface }}
+{% endif -%}
 {% if CCM_REQUIRED == 'y'%}
 ethernet cfm domain COLT-1 level 1 id null
 no service {{ SERVICE_NAME }}-DIP-FFCC-{{ item }}
@@ -14,6 +18,10 @@ no service {{ SERVICE_NAME }}-DIP-FFCC-{{ item }}
 no interface {{ site_list[1].main_interface }}.{{ item }}
 no l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }}
 no evpn evi {{ 40000 + item|int }}
+{% if site_list[1].ESI_ID == '00.00.00.00.00.00.00.00.00'%}
+{% else -%}
+no evpn interface {{ site_list[1].main_interface }}
+{% endif -%}
 {% if CCM_REQUIRED == 'y'%}
 ethernet cfm domain COLT-1 level 1 id null
 no service {{ SERVICE_NAME }}-DIP-FFCC-{{ item }}

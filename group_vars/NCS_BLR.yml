@@ -97,7 +97,6 @@ create_ELAN_service_job:
 delete_xc_service_job:
   - delete_service
 
-
 delete_xc_service_CORE1_job:
   - delete_XC_service_CORE1
 
@@ -113,20 +112,20 @@ napalm_provider:
 site_list:
  -  name: AR13
     end: Aend
-    main_interface: GigabitEthernet0/0/0/11
+    main_interface: GigabitEthernet0/0/0/12
     main_interface1: TenGigE0/0/1/5/0
     # connected to spirent 11/6
     local_MEP: 1
     remote_MEP: 2
     ESI_ID: 00.00.00.00.00.13.13.13.01
-    port_type: 'Y-type'
+    port_type: 'F-type'
  -  name: AR14
     end: Bend
-    main_interface: GigabitEthernet0/0/0/11
+    main_interface: GigabitEthernet0/0/0/12
     main_interface1: TenGigE0/0/1/5/0
     # connected to spirent 11/10
     local_MEP: 2
     remote_MEP: 1
     ESI_ID: 00.00.00.00.00.14.14.14.01
-    port_type: 'Y-type'
+    port_type: 'F-type'
 # applicable port Type values are 'Y-type,X-type,P-type,F-type'

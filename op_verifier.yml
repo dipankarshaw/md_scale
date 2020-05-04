@@ -1,0 +1,18 @@
+- hosts: AR14
+  connection: network_cli
+  gather_facts: no
+  roles:
+    - ansible-pyats
+  tasks:
+    - pyats_parse_command:
+        command: show l2vpn xconnect summary
+      register: output
+    # - set_fact:
+    #     SOFT_VERSION : "{{ output.structured.instance.all.vrf.default.neighbor.'10.91.126.102'}}"
+    - debug: var=output.structured
+    # - name: verify 
+    #   assert:
+    #     that:
+    #       - SOFT_VERSION == '6.6.3'
+    #     fail_msg: "'SOFT_VERSION' is not ok"
+    #     success_msg: "'SOFT_VERSION' is ok"

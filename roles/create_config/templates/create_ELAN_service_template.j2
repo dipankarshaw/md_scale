@@ -32,7 +32,10 @@ l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVI
 l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[0].main_interface }}.{{ item }} storm-control broadcast kbps 20000 
 l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} evi {{ 40000 + item|int }}
 evpn evi {{ 40000 + item|int }} advertise-mac
+{% if site_list[0].ESI_ID == '00.00.00.00.00.00.00.00.00'%}
+{% else -%}
 evpn interface {{ site_list[0].main_interface }} ethernet-segment identifier type 0 {{ site_list[0].ESI_ID }}
+{% endif -%}
 {% if CCM_REQUIRED == 'y'%}
 ethernet cfm domain COLT-1 level 1 id null service {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} id icc-based LE {{ item }}FF
 ethernet cfm domain COLT-1 level 1 id null service {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} id icc-based LE {{ item }}FF continuity-check interval {{ CCM_interval }}
@@ -80,7 +83,10 @@ l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVI
 l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[1].main_interface }}.{{ item }} storm-control broadcast kbps 20000 
 l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} evi {{ 40000 + item|int }}
 evpn evi {{ 40000 + item|int }} advertise-mac
+{% if site_list[1].ESI_ID == '00.00.00.00.00.00.00.00.00'%}
+{% else -%}
 evpn interface {{ site_list[1].main_interface }} ethernet-segment identifier type 0 {{ site_list[1].ESI_ID }}
+{% endif -%}
 {% if CCM_REQUIRED == 'y'%}
 ethernet cfm domain COLT-1 level 1 id null service {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} id icc-based LE {{ item }}FF
 ethernet cfm domain COLT-1 level 1 id null service {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} id icc-based LE {{ item }}FF continuity-check interval {{ CCM_interval }}
