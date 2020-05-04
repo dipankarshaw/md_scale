@@ -134,8 +134,10 @@
   tags: spirent
   tasks:
   - shell: |
-      cd /spirent_traffic
-      python3 dip2.py
+      cd spirent_traffic/
+      pwd
+      ls -lrt
+      python dip2.py
     register: ouput
   - debug: var=output
 - name: "verify configured services"
