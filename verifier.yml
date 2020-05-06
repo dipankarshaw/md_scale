@@ -1,6 +1,6 @@
 ---
 - name: get the location of Operation
-  hosts: NCS_BLR
+  hosts: AR13
   gather_facts: false
   connection: network_cli
   tasks:

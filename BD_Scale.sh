@@ -28,9 +28,10 @@ b=700
  done
 
 ansible-playbook xconnect_scale.yml --tags verify_service
-ansible-playbook verifier.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":400}'
-ansible-playbook verifier.yml -e '{"FF_start_evi_ID":500,"FF_end_evi_ID":900}'
-ansible-playbook xconnect_scale.yml --tags spirent
+ansible-playbook verifier.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":100}'
+cd spirent_traffic/
+python service_traffic_400.py
+cd ..
 
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":1,"FF_end_evi_ID":50,"H_QOS":"YES","Flat_QOS":"NO","CCM_REQUIRED":"n"}' --tags delete_ELAN_service
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":100,"Flat_QOS":"YES","CCM_REQUIRED":"y","DM_SL_REQUIRED":"YES"}' --tags delete_xc_service
