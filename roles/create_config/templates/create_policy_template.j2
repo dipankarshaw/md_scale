@@ -113,7 +113,7 @@ policy-map {{ ingress_policy1.CHILD }}
   set qos-group {{ ingress_policy1.B1_QOSG }}
  !
  class standard-PCP-4_0_DIP
-  police rate percent {{ ingress_policy1.STANDARD_PERCENT }} burst 500 kbytes peak-rate percent 100
+  police rate percent {{ ingress_policy1.STANDARD_PERCENT }} burst 2000 kbytes peak-rate percent 100
   !
   set qos-group {{ ingress_policy1.STANDARD_QOSG }}
   set traffic-class {{ ingress_policy1.STANDARD_TC }}

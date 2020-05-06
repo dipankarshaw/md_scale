@@ -1,0 +1,35 @@
+---
+- name: get the location of Operation
+  hosts: NCS_BLR
+  gather_facts: false
+  connection: network_cli
+  tasks:
+  - iosxr_command:
+      host: "{{ ansible_host }}"
+      username: '{{ ansible_ssh_user }}'
+      commands: 
+          - show ethernet cfm services domain COLT-1 service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }}
+      match: all
+      wait_for:
+          - result[0] contains "all operational, no errors"        
+    register: output
+    loop_control:
+      label: "*****************************************************************************
+      {{ output.stdout_lines | to_nice_yaml}} "
+    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID }}" stride="1"
+  - iosxr_command:
+      host: "{{ ansible_host }}"
+      username: '{{ ansible_ssh_user }}'
+      commands: 
+          - show ethernet sla operations interface {{ site_list[0].main_interface }}.{{ item }} profile DMM2 detail
+          - show ethernet sla operations interface {{ site_list[0].main_interface }}.{{ item }} profile SLM2 detail
+      match: all
+      wait_for:
+          - result[0] contains "1 bin; 1 probes/bucket"
+          - result[1] contains "no aggregation; 1 probes/bucket"     
+    register: output
+    loop_control:
+      label: "*****************************************************************************
+      {{ output.stdout_lines | to_nice_yaml}} "
+    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID }}" stride="1"
+

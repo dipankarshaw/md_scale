@@ -27,12 +27,12 @@ l2vpn xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}
 l2vpn xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} neighbor evpn evi {{ 50000 + item|int }} target {{ 50000 + item|int }} source {{ 50000 + item|int }}
 evpn evi {{ 50000 + item|int }}
 {% if CCM_REQUIRED == 'y'%}
-ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE {{ item }}FF
-ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE {{ item }}FF continuity-check interval {{ CCM_interval }}
-ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE {{ item }}FF mep crosscheck mep-id {{ site_list[0].remote_MEP }}
-ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE {{ item }}FF log continuity-check errors
-ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE {{ item }}FF log crosscheck errors
-ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE {{ item }}FF log continuity-check mep changes
+ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE 1113{{ item }}FF
+ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE 1113{{ item }}FF continuity-check interval {{ CCM_interval }}
+ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE 1113{{ item }}FF mep crosscheck mep-id {{ site_list[0].remote_MEP }}
+ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE 1113{{ item }}FF log continuity-check errors
+ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE 1113{{ item }}FF log crosscheck errors
+ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE 1113{{ item }}FF log continuity-check mep changes
 interface {{ site_list[0].main_interface }}.{{ item }} l2transport ethernet cfm mep domain COLT-1 service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} mep-id {{ site_list[0].local_MEP}} cos 2
 {% else -%}
 {% endif -%}
@@ -71,12 +71,12 @@ l2vpn xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}
 l2vpn xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} neighbor evpn evi {{ 50000 + item|int }} target {{ 50000 + item|int }} source {{ 50000 + item|int }}
 evpn evi {{ 50000 + item|int }}
 {% if CCM_REQUIRED == 'y'%}
-ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE {{ item }}FF
-ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE {{ item }}FF continuity-check interval {{ CCM_interval }}
-ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE {{ item }}FF mep crosscheck mep-id {{ site_list[1].remote_MEP }}
-ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE {{ item }}FF log continuity-check errors
-ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE {{ item }}FF log crosscheck errors
-ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE {{ item }}FF log continuity-check mep changes
+ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE 1113{{ item }}FF
+ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE 1113{{ item }}FF continuity-check interval {{ CCM_interval }}
+ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE 1113{{ item }}FF mep crosscheck mep-id {{ site_list[1].remote_MEP }}
+ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE 1113{{ item }}FF log continuity-check errors
+ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE 1113{{ item }}FF log crosscheck errors
+ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} id icc-based LE 1113{{ item }}FF log continuity-check mep changes
 interface {{ site_list[1].main_interface }}.{{ item }} l2transport ethernet cfm mep domain COLT-1 service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} mep-id {{ site_list[1].local_MEP}} cos 2
 {% else -%}
 {% endif -%}

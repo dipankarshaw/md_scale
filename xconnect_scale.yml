@@ -137,8 +137,8 @@
       cd spirent_traffic/
       pwd
       ls -lrt
-      python dip2.py
-    register: ouput
+      python service_traffic_400.py
+    register: ouput.stdout_lines
   - debug: var=output
 - name: "verify configured services"
   hosts: NCS_BLR

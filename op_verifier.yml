@@ -5,11 +5,11 @@
     - ansible-pyats
   tasks:
     - pyats_parse_command:
-        command: show l2vpn xconnect summary
+        command: 'show ethernet cfm peer meps'
       register: output
+    - debug: var=output.structured
     # - set_fact:
     #     SOFT_VERSION : "{{ output.structured.instance.all.vrf.default.neighbor.'10.91.126.102'}}"
-    - debug: var=output.structured
     # - name: verify 
     #   assert:
     #     that:
