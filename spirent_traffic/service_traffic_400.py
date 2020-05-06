@@ -16,15 +16,15 @@ from pprint import pprint
 ##############################################################
 
 test_sta = sth.test_config (
-		log                                              = '1',
+		log                                              = '0',
 		logfile                                          = 'dfe_logfile',
 		vendorlogfile                                    = 'dfe_stcExport',
-		vendorlog                                        = '1',
+		vendorlog                                        = '0',
 		hltlog                                           = '1',
 		hltlogfile                                       = 'dfe_hltExport',
 		hlt2stcmappingfile                               = 'dfe_hlt2StcMapping',
 		hlt2stcmapping                                   = '1',
-		log_level                                        = '7');
+		log_level                                        = '0');
 
 status = test_sta['status']
 if (status == '0') :

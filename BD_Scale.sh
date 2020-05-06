@@ -30,7 +30,8 @@ Multi-Dimension test Case
 # ansible-playbook xconnect_scale.yml --tags verify_service
 # ansible-playbook verifier.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":100}'
 ls -lrt
-chmod 777 spirent_traffic
+chmod 777 spirent_traffic/
+ls -lrt
 cd spirent_traffic/
 ls -lrt
 python service_traffic_400.py
