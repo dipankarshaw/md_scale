@@ -15,11 +15,11 @@ interface {{ site_list[0].main_interface1 }}.{{ item }} l2transport encapsulatio
 {% if QOS_REQUIRED == 'YES'and Flat_QOS == 'YES'%}
 interface {{ site_list[0].main_interface1 }}.{{ item }} l2transport service-policy input {{ ingress_policy_flatQOS.marker_shaper_policy }}
 interface {{ site_list[0].main_interface1 }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.marker_policy }}
-interface {{ site_list[0].main_interface1 }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.shaper_policy }}
+interface {{ site_list[0].main_interface1 }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.shaper_policy }} account user-defined 26
 {% elif QOS_REQUIRED == 'YES'and H_QOS == 'YES' -%}
 interface {{ site_list[0].main_interface1 }}.{{ item }} l2transport service-policy input {{ ingress_policy1.PARENT }}
 interface {{ site_list[0].main_interface1 }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.marker_policy }}
-interface {{ site_list[0].main_interface1 }}.{{ item }} l2transport service-policy output {{ eggress_policy1.PARENT }}
+interface {{ site_list[0].main_interface1 }}.{{ item }} l2transport service-policy output {{ eggress_policy1.PARENT }} account user-defined 26
 {% else -%}
 {% endif -%}
 l2vpn xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }}
@@ -59,11 +59,11 @@ interface {{ site_list[1].main_interface1 }}.{{ item }} l2transport encapsulatio
 {% if QOS_REQUIRED == 'YES'and Flat_QOS == 'YES'%}
 interface {{ site_list[1].main_interface1 }}.{{ item }} l2transport service-policy input {{ ingress_policy_flatQOS.marker_shaper_policy }}
 interface {{ site_list[1].main_interface1 }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.marker_policy }}
-interface {{ site_list[1].main_interface1 }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.shaper_policy }}
+interface {{ site_list[1].main_interface1 }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.shaper_policy }} account user-defined 26
 {% elif QOS_REQUIRED == 'YES'and H_QOS == 'YES' -%}
 interface {{ site_list[1].main_interface1 }}.{{ item }} l2transport service-policy input {{ ingress_policy1.PARENT }}
 interface {{ site_list[1].main_interface1 }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.marker_policy }}
-interface {{ site_list[1].main_interface1 }}.{{ item }} l2transport service-policy output {{ eggress_policy1.PARENT }}
+interface {{ site_list[1].main_interface1 }}.{{ item }} l2transport service-policy output {{ eggress_policy1.PARENT }} account user-defined 26
 {% else -%}
 {% endif -%}
 l2vpn xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} p2p {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }}

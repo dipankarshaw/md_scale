@@ -52,7 +52,7 @@ eggress_policy1:
 
 ingress_policy_flatQOS:
   marker_shaper_policy: BW-1000000Kbps-Class-B2-TG_DIP
-  Police_rate: 1000000
+  Police_rate: 500000
   TC: 4
   QOSG: 2
 
@@ -73,7 +73,7 @@ eggress_policy_flatQOS:
   marker_policy_NC_MatchQOS: 6
   marker_policy_NC_SETCOS: 6
   shaper_policy: SHAPE-1000000Kbps-Class-B2-GE_DIP
-  Police_rate: 1000000
+  Police_rate: 500000
 job:
  - create_service
  - delete_service
@@ -129,7 +129,7 @@ site_list:
  -  name: AR13
     end: Aend
     main_interface: GigabitEthernet0/0/0/11
-    main_interface1: TenGigE0/0/1/5/0
+    main_interface1: HundredGigE0/0/1/1 #TenGigE0/0/1/5/0
     # connected to spirent 11/6
     local_MEP: 1
     remote_MEP: 2
@@ -138,7 +138,7 @@ site_list:
  -  name: AR14
     end: Bend
     main_interface: GigabitEthernet0/0/0/11
-    main_interface1: TenGigE0/0/1/5/0
+    main_interface1: HundredGigE0/0/1/1 #TenGigE0/0/1/5/0
     # connected to spirent 11/10
     local_MEP: 2
     remote_MEP: 1

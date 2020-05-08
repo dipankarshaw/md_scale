@@ -1,5 +1,4 @@
 {% if side == 'Aend','Bend' -%}
-{% if QOS_REQUIRED == 'YES'and Flat_QOS == 'YES'%}
 no policy-map {{ ingress_policy_flatQOS.marker_shaper_policy }}
 no policy-map {{ eggress_policy_flatQOS.shaper_policy }}
 no policy-map {{ eggress_policy_flatQOS.marker_policy }}
@@ -15,7 +14,6 @@ no class-map BUSINESS2-PCP-2_DIP
 no class-map BUSINESS3-PCP-1_DIP
 no class-map BUSINESS1-PCP-3_DIP
 no class-map standard-PCP-4_0_DIP
-{% elif QOS_REQUIRED == 'YES'and H_QOS == 'YES' -%}
 no policy-map {{ ingress_policy1.PARENT }}
 no policy-map {{ eggress_policy1.PARENT }}
 no policy-map {{ ingress_policy1.CHILD }}
@@ -26,8 +24,6 @@ no class-map BUSINESS2-PCP-2_DIP
 no class-map BUSINESS3-PCP-1_DIP
 no class-map BUSINESS1-PCP-3_DIP
 no class-map standard-PCP-4_0_DIP
-{% else -%}
-{% endif -%}
 {% else -%}
  this is me
 {% endif %}

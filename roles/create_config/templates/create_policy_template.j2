@@ -1,5 +1,4 @@
 {% if side == 'Aend','Bend' -%}
-{% if QOS_REQUIRED == 'YES'and Flat_QOS == 'YES'%}
 policy-map {{ eggress_policy_flatQOS.shaper_policy }}
  class B2-TC4-Egress_DIP
   shape average {{ eggress_policy_flatQOS.Police_rate }} kbps
@@ -78,7 +77,6 @@ class-map match-any NC-MatchQOS
  match qos-group {{ eggress_policy_flatQOS.marker_policy_NC_MatchQOS}}
  end-class-map
 !
-{% elif QOS_REQUIRED == 'YES'and H_QOS == 'YES' -%}
 policy-map {{ ingress_policy1.PARENT }}
  class class-default
   service-policy {{ ingress_policy1.CHILD }}
@@ -245,8 +243,6 @@ class-map match-any NC-MatchQOS
  match qos-group {{ eggress_policy_flatQOS.marker_policy_NC_MatchQOS}}
  end-class-map
 !
-{% else -%}
-{% endif -%}
 {% else -%}
  this is me
 {% endif %}

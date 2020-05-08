@@ -15,11 +15,11 @@ interface {{ site_list[0].main_interface }}.{{ item }} l2transport encapsulation
 {% if QOS_REQUIRED == 'YES'and Flat_QOS == 'YES'%}
 interface {{ site_list[0].main_interface }}.{{ item }} l2transport service-policy input {{ ingress_policy_flatQOS.marker_shaper_policy }}
 interface {{ site_list[0].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.marker_policy }}
-interface {{ site_list[0].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.shaper_policy }}
+interface {{ site_list[0].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.shaper_policy }} account user-defined 26
 {% elif QOS_REQUIRED == 'YES'and H_QOS == 'YES' -%}
 interface {{ site_list[0].main_interface }}.{{ item }} l2transport service-policy input {{ ingress_policy1.PARENT }}
 interface {{ site_list[0].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.marker_policy }}
-interface {{ site_list[0].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy1.PARENT }}
+interface {{ site_list[0].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy1.PARENT }} account user-defined 26
 {% else -%}
 {% endif -%}
 l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }}
@@ -66,11 +66,11 @@ interface {{ site_list[1].main_interface }}.{{ item }} l2transport encapsulation
 {% if QOS_REQUIRED == 'YES'and Flat_QOS == 'YES'%}
 interface {{ site_list[1].main_interface }}.{{ item }} l2transport service-policy input {{ ingress_policy_flatQOS.marker_shaper_policy }}
 interface {{ site_list[1].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.marker_policy }}
-interface {{ site_list[1].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.shaper_policy }}
+interface {{ site_list[1].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.shaper_policy }} account user-defined 26
 {% elif QOS_REQUIRED == 'YES'and H_QOS == 'YES' -%}
 interface {{ site_list[1].main_interface }}.{{ item }} l2transport service-policy input {{ ingress_policy1.PARENT }}
 interface {{ site_list[1].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.marker_policy }}
-interface {{ site_list[1].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy1.PARENT }}
+interface {{ site_list[1].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy1.PARENT }} account user-defined 26
 {% else -%}
 {% endif -%}
 l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }}

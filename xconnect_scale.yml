@@ -162,6 +162,8 @@
       commands: 
         - 'show l2vpn xconnect summary'
         - 'show l2vpn bridge-domain summary'
+        - 'show ethernet cfm summary'
+        - 'show ethernet sla summary'
     register: output
   - debug:
       var: output.stdout_lines
