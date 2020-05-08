@@ -80,11 +80,6 @@ ethernet cfm domain COLT-1 level 1 id null service {{ ANE_ID }}-{{ BNE_ID}}_DIP_
 interface {{ site_list[1].main_interface }}.{{ item }} l2transport ethernet cfm mep domain COLT-1 service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} mep-id {{ site_list[1].local_MEP}} cos 2
 {% else -%}
 {% endif -%}
-{% if DM_SL_REQUIRED == 'YES'%}
-interface {{ site_list[1].main_interface }}.{{ item }} l2transport ethernet cfm mep domain COLT-1 service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} mep-id {{ site_list[1].local_MEP}} sla operation profile DMM2 target mep-id {{ site_list[1].remote_MEP }}
-interface {{ site_list[1].main_interface }}.{{ item }} l2transport ethernet cfm mep domain COLT-1 service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} mep-id {{ site_list[1].local_MEP}} sla operation profile SLM2 target mep-id {{ site_list[1].remote_MEP }}
-{% else -%}
-{% endif -%}
 {% endfor -%}
 {% else -%}
  this is me

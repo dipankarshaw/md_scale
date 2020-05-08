@@ -16,6 +16,7 @@
     loop_control:
       label: "*****************************************************************************
       {{ output.stdout_lines | to_nice_yaml}} "
-      pause: 3
+      #pause: 3
     with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID }}" stride="1"
 
+#show ethernet sla statistics interface gigabitEthernet 0/0/0/11.99 profile DMM2

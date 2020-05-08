@@ -2,7 +2,7 @@
 - name: get the location of Operation
   hosts: NCS_BLR,localhost
   gather_facts: false
-  tags: create_config,create_xc_service,create_ELAN_service,delete_xc_service,delete_ELAN_service,config_policy,delete_policy,test,delete_xc_service_CORE1,create_xc_service_CORE1
+  tags: create_config,create_xc_service,create_ELAN_service,delete_xc_service,delete_ELAN_service,config_policy,delete_policy,test,delete_xc_service_CORE1,create_xc_service_CORE1,configure_policy
   vars:
     Parent_Location: 'absent'
   tasks:
@@ -61,6 +61,17 @@
       label: "{{ item.0.name }} and {{ item.1 }} from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }}"
     tags: delete_policy
 
+  - name: "configure policy One time"
+    napalm_install_config:
+      config_file: "{{ location }}{{ item.1 }}_{{ item.0.name }}.cfg"
+      provider: "{{ napalm_provider }}"
+      commit_changes: True
+      replace_config: False
+    loop: "{{ site_list|product(configure_policy_job)|list }}"
+    when: item.0.name == local_hostname
+    loop_control:
+      label: "{{ item.0.name }} and {{ item.1 }} from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }}"
+    tags: configure_policy
 - name: XC service Creation
   hosts: NCS_BLR
   connection: network_cli

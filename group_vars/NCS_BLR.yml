@@ -84,26 +84,21 @@ job:
  - create_XC_service_CORE1
  - delete_XC_service_CORE1
 create_xc_service_job:
- - create_policy
  - create_service
-
 create_xc_service_CORE1_job:
  - create_XC_service_CORE1
-
 create_ELAN_service_job:
- - create_policy
  - create_ELAN_service
-
 delete_xc_service_job:
   - delete_service
-
 delete_xc_service_CORE1_job:
   - delete_XC_service_CORE1
-
 delete_ELAN_service_job:
   - delete_ELAN_service
 delete_policy_job:
   - delete_policy
+configure_policy_job:
+  - create_policy
 napalm_provider:
   hostname: '{{ ansible_host }}'
   username: '{{ ansible_ssh_user }}'
@@ -117,7 +112,7 @@ napalm_provider:
 #     # connected to spirent 11/6
 #     local_MEP: 1
 #     remote_MEP: 2
-#     ESI_ID: 00.00.00.00.00.13.13.13.01
+#     ESI_ID: 00.00.00.00.00.00.00.00.00
 #     port_type: 'F-type'
 #  -  name: AR6
 #     end: Bend
@@ -126,7 +121,7 @@ napalm_provider:
 #     # connected to spirent 11/10
 #     local_MEP: 2
 #     remote_MEP: 1
-#     ESI_ID: 00.00.00.00.00.14.14.14.01
+#     ESI_ID: 00.00.00.00.00.00.00.00.00
 #     port_type: 'F-type'
 # # applicable port Type values are 'Y-type,X-type,P-type,F-type'
 
@@ -138,7 +133,7 @@ site_list:
     # connected to spirent 11/6
     local_MEP: 1
     remote_MEP: 2
-    ESI_ID: 00.00.00.00.00.13.13.13.01
+    ESI_ID: 00.00.00.00.00.00.00.00.00
     port_type: 'F-type'
  -  name: AR14
     end: Bend
@@ -147,5 +142,5 @@ site_list:
     # connected to spirent 11/10
     local_MEP: 2
     remote_MEP: 1
-    ESI_ID: 00.00.00.00.00.14.14.14.01
+    ESI_ID: 00.00.00.00.00.00.00.00.00
     port_type: 'F-type'
