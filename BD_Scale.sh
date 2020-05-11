@@ -27,12 +27,17 @@ b=550
  b=`expr $b + $step` 
  done
 
+echo "
+*********
+Adding a pause for 6 minutes to collect DM/SL stats
+*********
+"
 sleep 6m
 ansible-playbook xconnect_scale.yml --tags verify_service
-ansible-playbook verifier.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":400}' --tags service_verify_core1
+ansible-playbook verifier.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":400}' --tags service_verify_core0
 ansible-playbook verifier.yml -e '{"FF_start_evi_ID":500,"FF_end_evi_ID":900}' --tags service_verify_core1
 ansible-playbook verifier.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":400}' --tags ccm_verify
-ansible-playbook verifier.yml -e '{"FF_start_evi_ID":500,"FF_end_evi_ID":900}' -- tags ccm_verify
+ansible-playbook verifier.yml -e '{"FF_start_evi_ID":500,"FF_end_evi_ID":900}' --tags ccm_verify
 ansible-playbook verifier.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":150}' --tags dmm_verify
 ansible-playbook verifier.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":150}' --tags slm_verify
 ls -lrt
