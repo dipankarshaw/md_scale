@@ -305,7 +305,7 @@ time.sleep(10)
 traffic_ctrl_ret = sth.traffic_control (
 		port_handle                                      = [port_handle[0],port_handle[1]],
 		action                                           = 'run',
-		duration                                         = '300');
+		duration                                         = '600');
 
 status = traffic_ctrl_ret['status']
 if (status == '0') :
@@ -315,7 +315,7 @@ else:
 	print("***** run sth.traffic_control successfully")
 
 print("***** Wait for traffic to stop")
-time.sleep(320)
+time.sleep(620)
 ##############################################################
 #start to get the device results
 ##############################################################
