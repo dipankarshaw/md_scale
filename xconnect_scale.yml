@@ -164,6 +164,7 @@
         - 'show l2vpn bridge-domain summary'
         - 'show ethernet cfm summary'
         - 'show ethernet sla summary'
+        - 'show policy-map targets summary'
     register: output
   - debug:
       var: output.stdout_lines

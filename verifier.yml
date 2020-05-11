@@ -1,7 +1,8 @@
 ---
-- name: get the location of Operation
+- name: Verify that CCM is up on all ther services
   hosts: AR13
   gather_facts: false
+  tags: ccm_verify
   connection: network_cli
   tasks:
   - iosxr_command:
@@ -11,12 +12,94 @@
           - show ethernet cfm services domain COLT-1 service {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }}
       match: all
       wait_for:
-          - result[0] contains "all operational, no errors"        
+          - result[0] contains "Local MEPs{{colon}} 1 total{{colon}} all operational, no errors"
+          - result[0] contains "Peer MEPs{{colon}} 1 total{{colon}} all operational, no errors"
+          - result[0] contains "CCM interval{{colon}} 1s"        
     register: output
     loop_control:
-      label: "*****************************************************************************
+      label: "*************\n
       {{ output.stdout_lines | to_nice_yaml}} "
       #pause: 3
     with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID }}" stride="1"
 
+- name: Verify that service is up
+  hosts: AR13
+  gather_facts: false
+  tags: service_verify_core0
+  connection: network_cli
+  tasks:
+  - iosxr_command:
+      host: "{{ ansible_host }}"
+      username: '{{ ansible_ssh_user }}'
+      commands: 
+          - show l2vpn xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} detail 
+      match: all
+      wait_for:
+          - result[0] contains "EVPN{{colon}} neighbor 10.91.126.200, PW ID{{colon}} evi {{ 50000 + item| int }}, ac-id {{ 50000 + item| int }}, state is up ( established )"
+          - result[0] contains "AC{{colon}} {{ site_list[0].main_interface }}.{{item}}, state is up"   
+    register: output
+    loop_control:
+      label: "*******************\n
+      {{ output.stdout_lines | to_nice_yaml}} "
+      #pause: 3
+    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID }}" stride="1"
+
+- name: Verify that service is up
+  hosts: AR13
+  gather_facts: false
+  tags: service_verify_core1
+  connection: network_cli
+  tasks:
+  - iosxr_command:
+      host: "{{ ansible_host }}"
+      username: '{{ ansible_ssh_user }}'
+      commands: 
+          - show l2vpn xconnect group {{ ANE_ID }}-{{ BNE_ID}}_DIP_FF_{{ item }} detail 
+      match: all
+      wait_for:
+          - result[0] contains "EVPN{{colon}} neighbor 10.91.126.200, PW ID{{colon}} evi {{ 50000 + item| int }}, ac-id {{ 50000 + item| int }}, state is up ( established )"
+          - result[0] contains "AC{{colon}} {{ site_list[0].main_interface1 }}.{{item}}, state is up"   
+    register: output
+    loop_control:
+      label: "*******************\n
+      {{ output.stdout_lines | to_nice_yaml}} "
+      #pause: 3
+    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID }}" stride="1"
+
+- name: Verify that DMM statistics are ok
+  hosts: AR13
+  gather_facts: false
+  tags: dmm_verify
+  connection: network_cli
+  tasks:
+  - iosxr_command:
+      host: "{{ ansible_host }}"
+      username: '{{ ansible_ssh_user }}'
+      commands: 
+          - show ethernet sla statistics interface {{ site_list[0].main_interface }}.{{item}} profile DMM2 | utility egrep 'Min\|Source\|Round\|Pkts\|warning'
+    register: output
+    loop_control:
+      label: "*******************\n\n\n
+      {{ output.stdout_lines | to_nice_yaml}} \n\n\n"
+      # pause: 1
+    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID }}" stride="1"
+
+
+- name: Verify that DMM statistics are ok
+  hosts: AR13
+  gather_facts: false
+  tags: slm_verify
+  connection: network_cli
+  tasks:
+  - iosxr_command:
+      host: "{{ ansible_host }}"
+      username: '{{ ansible_ssh_user }}'
+      commands: 
+           - show ethernet sla statistics interface {{ site_list[0].main_interface }}.{{item}} profile SLM2 | utility egrep 'Min\|Source\|Pkts\|warning'
+    register: output
+    loop_control:
+      label: "*******************\n\n\n
+      {{ output.stdout_lines | to_nice_yaml}}\n\n\n"
+      # pause: 1
+    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID }}" stride="1"
 #show ethernet sla statistics interface gigabitEthernet 0/0/0/11.99 profile DMM2
