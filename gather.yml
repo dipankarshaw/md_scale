@@ -1,0 +1,121 @@
+---
+- hosts: NCS_BLR
+  gather_facts: no
+  tasks:
+   - name: "create the directories to store"
+     block:
+       - setup:
+           filter: "ansible_date_time"
+           gather_subset: "!all"
+       - set_fact:
+           DTG: "{{ ansible_date_time.iso8601_basic_short }}"
+       - file:
+           path: "{{ item }}"
+           state: "directory"
+         loop:
+           - "archieve"
+           - "files"
+     run_once: true
+   - set_fact:
+      file_string: "{{ inventory_hostname }}_{{ DTG }}"
+   - set_fact:
+      output_dir: "files/{{ file_string }}"
+   - file:
+      path: "{{ output_dir }}"
+      state: "directory"
+     delegate_to: "localhost"
+
+
+- name: test of Gather facts
+  hosts: NCS_BLR
+  connection: network_cli
+  gather_facts: no
+  tasks:
+  - iosxr_command:
+      commands: "{{ item.command }}"
+    vars:
+      ansible_command_timeout: 500
+    register: output
+    loop: "{{ commands_to_send }}"
+    loop_control:
+      label: "{{ item.suffix }}"
+  - template:
+      src: ./commands.j2
+      dest: "{{ output_dir }}/{{ file_string }}_{{ item.0.suffix }}.txt"
+    loop: "{{ commands_to_send | zip(output.results) | list }}"
+    loop_control:
+      label: "{{ item.0 }}"
+    delegate_to: "localhost"
+- hosts: NCS_BLR
+  name: archieve the files
+  tasks:
+   - name: "create the directories to store"
+     block:
+       - set_fact:
+           arch_fqdn: "archieve/commands_{{ DTG }}.{{ archieve_format }}"
+       - archive:
+           dest: "{{ arch_fqdn }}"
+           path: "files/*{{ DTG }}"
+           format: "{{ archieve_format }}"
+           remove: "{{ remove_files }}"
+     run_once: true
+     delegate_to: "localhost"
+   - debug:
+      var: output_dir
+   - file:
+      path: "{{ output_dir }}"
+      state: "absent"
+     when: "remove_files"
+     delegate_to: "localhost"
+     tags: delete
+
+
+# - hosts: AR11
+#   name: new napalm learning
+#   tags: napalm
+#   tasks:
+#     - name: get facts from device
+#       napalm_get_facts:
+#         hostname: '{{ ansible_host }}'
+#         username: '{{ ansible_ssh_user }}'
+#         dev_os: '{{ ansible_network_os }}'
+#         password: '{{ ansible_ssh_pass }}'
+#         filter: ['bgp_neighbors']
+#       register: result
+#     - name: print data
+#       debug:
+#         var: "{{ result.ansible_facts.napalm_bgp_neighbors.global.peers[0] }}"
+
+# - hosts: AR11
+#   name: new learning ntc-parsing
+#   connection: network_cli
+#   gather_facts: False
+#   tags: ntc_tem
+#   tasks:
+#     - name: get version
+#       ntc_show_command:
+#         host: '{{ ansible_host }}'
+#         username: '{{ ansible_ssh_user }}'
+#         password: '{{ ansible_ssh_pass }}'
+#         platform: cisco_xr
+#         command: show bgp neighbor
+#         template_dir: "/root/.ansible/plugins/modules/ntc-ansible/ntc-templates/templates"
+#       register: result
+#     -  debug: var=result
+
+
+#- name: "new learnings"
+#  hosts: AR5
+#  tags: new
+#  connection: network_cli
+#  tasks:
+#   - iosxr_command:
+#       commands:
+#         - show int brief | include 0/0/1/3/3
+#     register: ooo
+#   - debug:
+#       var: "{{ ooo.stdout_lines | to_nice_json }}"
+
+
+
+...

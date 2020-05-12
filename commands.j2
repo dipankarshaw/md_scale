@@ -1,0 +1,9 @@
+!!!
+!!! command output of {{ item.0.command }}
+!!!
+{% for line in item.1.stdout_lines[0] -%}
+{{ line }}
+{% endfor %}
+!!!
+!!! end of output 
+!!!
