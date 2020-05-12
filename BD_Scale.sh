@@ -32,7 +32,7 @@
 # Adding a pause for 6 minutes to collect DM/SL stats
 # *********
 # "
-sleep 6m
+# sleep 6m
 # ansible-playbook xconnect_scale.yml --tags verify_service
 ansible-playbook gather.yml
 # ansible-playbook verifier.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":400}' --tags service_verify_core0
