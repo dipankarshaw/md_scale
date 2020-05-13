@@ -20,7 +20,7 @@
       label: "*************\n
       {{ output.stdout_lines | to_nice_yaml}} "
       #pause: 3
-    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID }}" stride="1"
+    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID - 1}}" stride="1"
 
 - name: Verify that service is up
   hosts: AR13
@@ -42,7 +42,7 @@
       label: "*******************\n
       {{ output.stdout_lines | to_nice_yaml}} "
       #pause: 3
-    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID }}" stride="1"
+    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID - 1 }}" stride="1"
 
 - name: Verify that service is up
   hosts: AR13
@@ -64,7 +64,7 @@
       label: "*******************\n
       {{ output.stdout_lines | to_nice_yaml}} "
       #pause: 3
-    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID }}" stride="1"
+    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID - 1 }}" stride="1"
 
 - name: Verify that DMM statistics are ok
   hosts: AR13
@@ -82,7 +82,7 @@
       label: "*******************\n\n\n
       {{ output.stdout_lines | to_nice_yaml}} \n\n\n"
       # pause: 1
-    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID }}" stride="1"
+    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID - 1 }}" stride="1"
 
 
 - name: Verify that DMM statistics are ok
@@ -101,5 +101,5 @@
       label: "*******************\n\n\n
       {{ output.stdout_lines | to_nice_yaml}}\n\n\n"
       # pause: 1
-    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID }}" stride="1"
+    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID - 1 }}" stride="1"
 #show ethernet sla statistics interface gigabitEthernet 0/0/0/11.99 profile DMM2
