@@ -1,7 +1,7 @@
 ---
 colon: ":"
 FF_start_evi_ID: 1400
-FF_end_evi_ID: 1405
+FF_end_evi_ID: 1401
 dist: "{{ FF_end_evi_ID|int - FF_start_evi_ID }}"
 CCM_interval: 1s
 remove_files: true
@@ -23,7 +23,7 @@ Flat_QOS: 'NO'
 H_QOS: 'YES'
 ingress_policy1: 
   PARENT: P2P_PARENT_HQOS_INGRESS_DIP
-  SHAPE: 10
+  SHAPE: 100
   CHILD: P2P_CHILD_HQOS_INGRESS_DIP
   PREMIUM_PERCENT: 15
   B1_PERCENT: 15
@@ -43,7 +43,7 @@ ingress_policy1:
 
 eggress_policy1:
   PARENT: P2P_PARENT_HQOS_EGGRESS_DIP
-  SHAPE: 10
+  SHAPE: 100
   CHILD: P2P_CHILD_HQOS_EGGRESS_DIP
   PREMIUM_PERCENT: 15
   B1_PERCENT: 15  
@@ -53,7 +53,7 @@ eggress_policy1:
 
 ingress_policy_flatQOS:
   marker_shaper_policy: BW-1000000Kbps-Class-B2-TG_DIP
-  Police_rate: 500000
+  Police_rate: 1000000
   TC: 4
   QOSG: 2
 
@@ -74,7 +74,7 @@ eggress_policy_flatQOS:
   marker_policy_NC_MatchQOS: 6
   marker_policy_NC_SETCOS: 6
   shaper_policy: SHAPE-1000000Kbps-Class-B2-GE_DIP
-  Police_rate: 500000
+  Police_rate: 1000000
 job:
  - create_service
  - delete_service

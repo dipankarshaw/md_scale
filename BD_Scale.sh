@@ -16,7 +16,7 @@ echo " ********* Adding a pause for 6 minutes to collect DM/SL stats ********* "
 # Verification of services
 sleep 6m
 ansible-playbook xconnect_scale.yml --tags verify_service
-ansible-playbook gather.yml
+`ansible-playbook gather.yml`
 echo " ********* Check the status of all X-connect services on Core 0 ********* "
 ansible-playbook verifier.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":420}' --tags service_verify_core0
 echo " ********* Check the status of all X-connect services on Core 1 ********* "
@@ -33,6 +33,10 @@ ansible-playbook verifier.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":150}' --
 chmod 777 spirent_traffic/
 cd spirent_traffic/
 python service_traffic_400.py
+sleep 1m
+python ELAN_RFC_Test.py
+sleep 1m
+python ELINE_RFC_Test.py
 cd ..
 #Deletion of services.
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":1,"FF_end_evi_ID":50,"H_QOS":"YES","Flat_QOS":"NO","CCM_REQUIRED":"n"}' --tags delete_ELAN_service
