@@ -16,12 +16,12 @@ from pprint import pprint
 
 test_sta = sth.test_config (
 		log                                              = '1',
-		logfile                                          = 'rfctest_logfile',
-		vendorlogfile                                    = 'rfctest_stcExport',
+		logfile                                          = 'ELINE_RFC_Test_logfile',
+		vendorlogfile                                    = 'ELINE_RFC_Test_stcExport',
 		vendorlog                                        = '1',
 		hltlog                                           = '1',
-		hltlogfile                                       = 'rfctest_hltExport',
-		hlt2stcmappingfile                               = 'rfctest_hlt2StcMapping',
+		hltlogfile                                       = 'ELINE_RFC_Test_hltExport',
+		hlt2stcmappingfile                               = 'ELINE_RFC_Test_hlt2StcMapping',
 		hlt2stcmapping                                   = '1',
 		log_level                                        = '7');
 
