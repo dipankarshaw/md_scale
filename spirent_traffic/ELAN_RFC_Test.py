@@ -294,6 +294,30 @@ if (status == '0') :
 else:
 	print("***** run sth.traffic_config successfully")
 
+##############################################################
+#do MAC learning & clear stats
+##############################################################
+
+print("***** sending 30 sec initial traffic for mac-learning")
+traffic_ctrl_ret = sth.traffic_control(
+	port_handle=[port_handle[0], port_handle[1]],
+	action='run',
+	duration='30');
+time.sleep(5)
+traffic_ctrl_ret = sth.traffic_control(
+	port_handle=[port_handle[0], port_handle[1]],
+	action='stop')
+print("***** mac learning done")
+print("***** clear the stats stats of the Traffic")
+traffic_ctrl_ret = sth.traffic_control(
+	port_handle=[port_handle[0], port_handle[1]],
+	action='clear_stats');
+time.sleep(10)
+
+##############################################################
+#start RFC test
+##############################################################
+
 streamblock_handle = [streamblock_ret1['stream_id'],streamblock_ret2['stream_id']]
 
 rfc_cfg0 = sth.test_rfc2544_config (
