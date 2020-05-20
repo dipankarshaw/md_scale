@@ -35,11 +35,15 @@ ansible-playbook verifier.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":150}' --
 # Spirent Traffic verification
 chmod 777 spirent_traffic/
 cd spirent_traffic/
-python service_traffic_400.py
+python3 service_traffic_400.py
 sleep 1m
-python ELAN_RFC_Test.py
+python3 ELAN_RFC_Test.py
 sleep 1m
-python ELINE_RFC_Test.py
+python3 ELINE_RFC_Test.py
+sleep 1m
+python3 failure.py
+sleep 1m
+python3 repair.py
 cd ..
 #Deletion of services.
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":1,"FF_end_evi_ID":50,"H_QOS":"YES","Flat_QOS":"NO","CCM_REQUIRED":"n"}' --tags delete_ELAN_service

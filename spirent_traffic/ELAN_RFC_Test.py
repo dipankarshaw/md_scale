@@ -10,6 +10,10 @@ import sys
 import re
 from pprint import pprint
 
+list1 = [1518,9100]
+list2 = [*range(80,110,10)]
+
+
 ##############################################################
 #config the parameters for the logging
 ##############################################################
@@ -137,7 +141,7 @@ device_ret0 = sth.emulation_device_config (
 		port_handle                                      = port_handle[0],
 		vlan_user_pri                                    = '0',
 		vlan_cfi                                         = '0',
-		vlan_id                                          = '1400',
+		vlan_id                                          = '49',
 		vlan_tpid                                        = '33024',
 		vlan_id_repeat_count                             = '0',
 		vlan_id_step                                     = '0',
@@ -168,7 +172,7 @@ device_ret1 = sth.emulation_device_config (
 		port_handle                                      = port_handle[1],
 		vlan_user_pri                                    = '0',
 		vlan_cfi                                         = '0',
-		vlan_id                                          = '1400',
+		vlan_id                                          = '49',
 		vlan_tpid                                        = '33024',
 		vlan_id_repeat_count                             = '0',
 		vlan_id_step                                     = '0',
@@ -367,19 +371,15 @@ else:
 	print("***** run sth.test_rfc2544_info successfully, and results is:")
 	pprint(results_ret1)
 
-FL_1518_80 = results_ret1['rfc2544throughput']['load_detail']['iteration']['1']['frame_size']['1518']['80']['frame_loss']
-FL_1518_90 = results_ret1['rfc2544throughput']['load_detail']['iteration']['1']['frame_size']['1518']['90']['frame_loss']
-FL_1518_100 = results_ret1['rfc2544throughput']['load_detail']['iteration']['1']['frame_size']['1518']['100']['frame_loss']
-FL_9100_80 = results_ret1['rfc2544throughput']['load_detail']['iteration']['1']['frame_size']['9100']['80']['frame_loss']
-FL_9100_90 = results_ret1['rfc2544throughput']['load_detail']['iteration']['1']['frame_size']['9100']['90']['frame_loss']
-FL_9100_100 = results_ret1['rfc2544throughput']['load_detail']['iteration']['1']['frame_size']['9100']['100']['frame_loss']
-
-print("***Frame loss on 80 percent load on 1518 byte:                       " + str(FL_1518_80))
-print("***Frame loss on 90 percent load on 1518 byte:                       " + str(FL_1518_90))
-print("***Frame loss on 100 percent load on 1518 byte:                      " + str(FL_1518_100))
-print("***Frame loss on 80 percent load on 9100 byte:                       " + str(FL_9100_80))
-print("***Frame loss on 90 percent load on 9100 byte:                       " + str(FL_9100_90))
-print("***Frame loss on 100 percent load on 9100 byte:                      " + str(FL_9100_100))
+Short_result = results_ret1['rfc2544throughput']['load_detail']['iteration']['1']['frame_size']
+for item1 in list1:
+    for item2 in list2:
+        print ("***** frame loss for Frame size " 
+        + str(item1) 
+        + str(" and load ") 
+        + str(item2) 
+        + str(" is ") 
+        + str(Short_result[str(item1)][str(item2)]['frame_loss']))
 
 
 ##############################################################
