@@ -35,6 +35,8 @@ ansible-playbook verifier.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":150}' --
 # Spirent Traffic verification
 chmod 777 spirent_traffic/
 cd spirent_traffic/
+python3 Loopback.py
+sleep 1m
 python3 service_traffic_400.py
 sleep 1m
 python3 ELAN_RFC_Test.py

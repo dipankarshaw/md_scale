@@ -12,6 +12,50 @@ import re
 from pprint import pprint
 from netmiko import Netmiko
 import datetime
+from genie import testbed
+from jinja2 import Template
+import csv
+
+cisco14 = {
+	"host": "10.91.126.200",
+	"username": "dshaw1",
+	"password": "N0@ught33b0y",
+	"device_type": "cisco_xr",
+	}
+
+F_vlan = 50
+def Command_Creation(filename, item1,item2, interface_name):
+    with open(filename,'r') as f:
+        Temp = f.read()
+        failure_command = Template(Temp).render(item = interface_name)
+        f.close()
+        file_open = open(str(item1)+"_Loop_"+str(item2)+"_command.txt", 'w+')
+        file_open.write(failure_command)
+        file_open.write('\n')
+        file_open.close()
+
+def netmiko_Set_config(item1):
+	print("***** log in to device")
+	net_connect = Netmiko(**cisco14)
+	f = open(str(item1)+"_Loop_Set_command.txt",'r')
+	f2 = f.readlines()
+	output = net_connect.send_config_set(f2)
+	net_connect.commit()
+	print(output)
+	net_connect.exit_config_mode()
+	net_connect.disconnect()
+
+def netmiko_Release_config(item1):
+	print("***** log in to device")
+	net_connect = Netmiko(**cisco14)
+	f = open(str(item1)+"_Loop_Release_command.txt",'r')
+	f2 = f.readlines()
+	output = net_connect.send_config_set(f2)
+	net_connect.commit()
+	print(output)
+	net_connect.exit_config_mode()
+	net_connect.disconnect()
+
 
 ##############################################################
 #config the parameters for the logging
@@ -140,7 +184,7 @@ device_ret0 = sth.emulation_device_config (
 		port_handle                                      = port_handle[0],
 		vlan_user_pri                                    = '0',
 		vlan_cfi                                         = '0',
-		vlan_id                                          = '49',
+		vlan_id                                          = F_vlan,
 		vlan_tpid                                        = '33024',
 		vlan_id_repeat_count                             = '0',
 		vlan_id_step                                     = '0',
@@ -233,7 +277,7 @@ device_ret3 = sth.emulation_device_config (
 		port_handle                                      = port_handle[1],
 		vlan_user_pri                                    = '0',
 		vlan_cfi                                         = '0',
-		vlan_id                                          = '49',
+		vlan_id                                          = F_vlan,
 		vlan_tpid                                        = '33024',
 		vlan_id_repeat_count                             = '0',
 		vlan_id_step                                     = '0',
@@ -337,7 +381,7 @@ streamblock_ret1 = sth.traffic_config (
 		mac_dst                                          = '00:10:94:00:01:13',
 		vlan_cfi                                         = '0',
 		vlan_tpid                                        = '33024',
-		vlan_id                                          = '49',
+		vlan_id                                          = F_vlan,
 		vlan_user_priority                               = '0',
 		enable_control_plane                             = '0',
 		l3_length                                        = '9078',
@@ -490,50 +534,35 @@ else:
 ##############################################################
 #start devices
 ##############################################################
-L1_Loop_Set_command = ['int gigabitEthernet 0/0/0/11','loopback internal']
-L1_Loop_Release_command = ['int gigabitEthernet 0/0/0/11','no loopback internal']
-L2_Loop_Set_command = ['int gigabitEthernet 0/0/0/11.49 l2transport','ethernet loopback permit internal','commit','exit','exit','ethernet loopback start local interface GigabitEthernet0/0/0/11.49 internal destination mac-address 0010.9400.0113 timeout 1800']
-L2_Loop_Release_command = ['exit','ethernet loopback stop local interface GigabitEthernet0/0/0/11.49 id 1','configure terminal','interface GigabitEthernet0/0/0/11.49 l2transport','no ethernet loopback']
 
-list = ['L1','L2']
-for items in list:
-    print("***** log in to device")
-    cisco14 = {
-        "host": "10.91.126.200",
-        "username": "dshaw1",
-        "password": "N0@ught33b0y",
-        "device_type": "cisco_xr",
-    }
+List1 = ['L1','L2']
+List2 = ['Set','Release']
 
-    net_connect = Netmiko(**cisco14)
-    
-    print("*************** perform Loop ")
-    # print()
-    # print(net_connect.find_prompt())
-    command = str(items)+'_Loop_Set_command'
-    output = net_connect.send_config_set(L1_Loop_Set_command)
-    net_connect.commit()
-    print(output)
-    net_connect.exit_config_mode()
-    net_connect.disconnect()
+interface_name = 'GigabitEthernet0/0/0/11'
+for item1 in List1:
+	for item2 in List2:
+		Command_Creation("tem_"+item1+"_Loop_"+item2+"_command.j2", item1,item2 , interface_name)
+		print("**** Templateing Done for "+str(item1)+" & "+ str(item2)+" command")
 
-    ##############################################################
-    #start traffic
-    ##############################################################
-    pprint(streamblock_ret1['stream_id'])
-    FF_stream = streamblock_ret1['stream_id']
 
-    traffic_ctrl_ret = sth.traffic_control (
+
+for item1 in List1:
+
+	print("**** perform "+str(item1)+" Loop ")
+	netmiko_Set_config(item1)
+	pprint(streamblock_ret1['stream_id'])
+	FF_stream = streamblock_ret1['stream_id']
+	traffic_ctrl_ret = sth.traffic_control (
             stream_handle                                      = [FF_stream],
             action                                           = 'run',
             duration                                         = '30')
-      
-    status = traffic_ctrl_ret['status']
-    if (status == '0') :
-        print("run sth.traffic_control failed")
-        print(traffic_ctrl_ret)
-    else:
-        print("***** run sth.traffic started successfully")
+    
+	status = traffic_ctrl_ret['status']
+	if (status == '0') :
+		print("run sth.traffic_control failed")
+		print(traffic_ctrl_ret)
+	else:
+		print("***** run sth.traffic started successfully")
 
     ##############################################################
     #start to get the device results
@@ -543,43 +572,36 @@ for items in list:
     #start to get the traffic results
     ##############################################################
 
-    traffic_results_ret = sth.traffic_stats (
-            port_handle                                      = [port_handle[0],port_handle[1]],
-            streams =  [FF_stream],
-            mode                                             = 'detailed_streams');
+	traffic_results_ret = sth.traffic_stats (
+			port_handle                                      = [port_handle[0],port_handle[1]],
+			streams =  [FF_stream],
+			mode                                             = 'detailed_streams');
 
-    status = traffic_results_ret['status']
-    if (status == '0') :
-        print("run sth.traffic_stats failed")
-        print(traffic_results_ret)
-    else:
-        print("***** run sth.traffic_stats successfully, and results is:")
-        #pprint(traffic_results_ret)
+	status = traffic_results_ret['status']
+	if (status == '0') :
+		print("run sth.traffic_stats failed")
+		print(traffic_results_ret)
+	else:
+		print("***** run sth.traffic_stats successfully, and results is:")
+		pprint(traffic_results_ret)
 
-    rx = traffic_results_ret[port_handle[0]]['stream'][FF_stream]['rx']['0']['total_pkts']
-    tx = traffic_results_ret[port_handle[0]]['stream'][FF_stream]['tx']['0']['total_pkts']
+	rx = traffic_results_ret[port_handle[0]]['stream'][FF_stream]['rx']['0']['total_pkts']
+	tx = traffic_results_ret[port_handle[0]]['stream'][FF_stream]['tx']['0']['total_pkts']
 
-    print("************* No of Rx packets are: " + str(rx))
-    print("************* No of Tx packets are: " + str(tx))
-    if tx == rx :
-        print(" *****************  Test has Passed")
-    else:
-        print(" *****************  Test has Failed")
+	print("**** No of Rx packets are: " + str(rx))
+	print("**** No of Tx packets are: " + str(tx))
+	if tx == rx :
+		print(" ***************** Test has Passed")
+	else:
+		print(" ***************** Test has Failed")
 
-    raffic_ctrl_ret = sth.traffic_control(
-        port_handle=[port_handle[0], port_handle[1]],
-        action='clear_stats');
+	raffic_ctrl_ret = sth.traffic_control(
+		port_handle=[port_handle[0], port_handle[1]],
+		action='clear_stats');
 
-    print("*************** Release Loop ")
-    net_connect = Netmiko(**cisco14)
-    # print()
-    # print(net_connect.find_prompt())
-    commands = str(items)+'_Loop_Release_command'
-    output = net_connect.send_config_set(L1_Loop_Release_command)
-    net_connect.commit()
-    print(output)
-    net_connect.exit_config_mode()
-    net_connect.disconnect()
+	print("**** Release "+str(item1)+" Loop ")
+	netmiko_Release_config(item1)
+	time.sleep(30)
 
 ##############################################################
 #clean up the session, release the ports reserved and cleanup the dbfile
