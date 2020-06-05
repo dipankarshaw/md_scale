@@ -27,9 +27,9 @@ l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVI
 l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} mac limit action {{ MAC_FLOOD_ACTION }}
 l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} mtu {{ BD_MTU }}
 l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[0].main_interface }}.{{ item }}
-l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[0].main_interface }}.{{ item }} storm-control unknown-unicast kbps 20000
-l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[0].main_interface }}.{{ item }} storm-control multicast kbps 20000
-l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[0].main_interface }}.{{ item }} storm-control broadcast kbps 20000 
+l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[0].main_interface }}.{{ item }} storm-control unknown-unicast kbps {{BUM_BW}}
+l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[0].main_interface }}.{{ item }} storm-control multicast kbps {{BUM_BW}}
+l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[0].main_interface }}.{{ item }} storm-control broadcast kbps {{BUM_BW}}
 l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} evi {{ 40000 + item|int }}
 evpn evi {{ 40000 + item|int }} advertise-mac
 {% if site_list[0].ESI_ID == '00.00.00.00.00.00.00.00.00'%}
@@ -78,9 +78,9 @@ l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVI
 l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} mac limit action {{ MAC_FLOOD_ACTION }}
 l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} mtu {{ BD_MTU }}
 l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[1].main_interface }}.{{ item }}
-l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[1].main_interface }}.{{ item }} storm-control unknown-unicast kbps 20000
-l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[1].main_interface }}.{{ item }} storm-control multicast kbps 20000
-l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[1].main_interface }}.{{ item }} storm-control broadcast kbps 20000 
+l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[1].main_interface }}.{{ item }} storm-control unknown-unicast kbps {{BUM_BW}}
+l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[1].main_interface }}.{{ item }} storm-control multicast kbps {{BUM_BW}}
+l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} interface {{ site_list[1].main_interface }}.{{ item }} storm-control broadcast kbps {{BUM_BW}}
 l2vpn bridge group {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} bridge-domain {{ SERVICE_NAME }}-DIP-FFCC-{{ item }} evi {{ 40000 + item|int }}
 evpn evi {{ 40000 + item|int }} advertise-mac
 {% if site_list[1].ESI_ID == '00.00.00.00.00.00.00.00.00'%}

@@ -1,5 +1,5 @@
 {% if side == 'Aend','Bend' -%}
-{% if IF_CONFIG_REQUIRED == 'YES'-%}
+{% if IF_CONFIG_REQUIRED == 'YES' and side == 'Aend'-%}
 interface {{ site_list[0].main_interface }} mtu 9186
 interface {{ site_list[0].main_interface }} service-policy output egr account user-defined 26
 interface {{ site_list[0].main_interface }} lldp
@@ -7,6 +7,14 @@ interface {{ site_list[0].main_interface }} lldp receive disable
 interface {{ site_list[0].main_interface }} lldp transmit disable
 interface {{ site_list[0].main_interface }} negotiation auto
 interface {{ site_list[0].main_interface }} load-interval 30
+{% elif IF_CONFIG_REQUIRED == 'YES' and side == 'Bend' -%}
+interface {{ site_list[1].main_interface }} mtu 9186
+interface {{ site_list[1].main_interface }} service-policy output egr account user-defined 26
+interface {{ site_list[1].main_interface }} lldp
+interface {{ site_list[1].main_interface }} lldp receive disable
+interface {{ site_list[1].main_interface }} lldp transmit disable
+interface {{ site_list[1].main_interface }} negotiation auto
+interface {{ site_list[1].main_interface }} load-interval 30
 {% else -%}
 {% endif -%}
 policy-map {{ eggress_policy_flatQOS.shaper_policy }}

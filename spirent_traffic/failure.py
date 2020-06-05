@@ -63,7 +63,8 @@ intStatus = sth.connect (
 		device                                           = device,
 		port_list                                        = port_list,
 		break_locks                                      = 1,
-		offline                                          = 0 )
+		offline                                          = 0,
+		reset = 1 )
 
 status = intStatus['status']
 
@@ -318,8 +319,8 @@ else:
 	print("***** run sth.traffic_control successfully")
 
 print("***** Wait for traffic to stop")
-time.sleep(30)
-print("***** 30 seconds sleep done")
+time.sleep(20)
+print("***** 20 seconds sleep done")
 print("***** log in to device")
 cisco1 = {
     "host": "10.91.126.199",
@@ -329,17 +330,25 @@ cisco1 = {
 }
 
 net_connect = Netmiko(**cisco1)
-command = ['int HundredGigE0/0/1/0','shut']
+failure_command = ['int HundredGigE0/0/1/0','shut']
+repair_command = ['int HundredGigE0/0/1/0','no shut']
 
 print()
 print(net_connect.find_prompt())
-output = net_connect.send_config_set(command)
-net_connect.commit()
+## this loop will run 2 times, means will fail the link 2 times and repair the link 2 times
+no_of_failure_repair = 4
+for x in range(int(no_of_failure_repair/2)):
+	output = net_connect.send_config_set(failure_command)
+	net_connect.commit()
+	print(output)
+	time.sleep(10)
+	output = net_connect.send_config_set(repair_command)
+	net_connect.commit()
+	print(output)
+	time.sleep(10)
+
 net_connect.exit_config_mode()
-#output += net_connect.send_command("show int HundredGigE0/0/1/0")
 net_connect.disconnect()
-print(output)
-print()
 
 print("***** log out of device")
 time.sleep(90)
@@ -377,22 +386,24 @@ port2_RX = traffic_results_ret['port2']['stream']['streamblock2']['rx']['total_p
 port2_TX = traffic_results_ret['port2']['stream']['streamblock2']['tx']['total_pkts']
 drop1 = traffic_results_ret['port1']['stream']['streamblock1']['rx']['dropped_pkts']
 drop2 = traffic_results_ret['port2']['stream']['streamblock2']['rx']['dropped_pkts']
-if ((int(drop1) == 0) and (int(drop2) == 0)):
-	print("****** test case has passed")
+if ((int(drop1) <= int(no_of_failure_repair * 50)) and (int(drop2) <= int(no_of_failure_repair * 50))):
+	print("****** test case has passed & Failure/repair time is within limits")
 	print("***received traffic on Port1:                    			" + str(port1_RX))
 	print("***sent traffic from Port1:                      			" + str(port1_TX))
 	print("***received traffic on Port2:                    			" + str(port2_RX))
 	print("***sent traffic from Port2:                      			" + str(port2_TX))
 	print("***drop from Port2_AR13 to Port1_AR14:                     	" + str(drop1))
 	print("***drop from Port1_AR14 to port2_AR13:                     	" + str(drop2))
+	print("*** expected failure time is 								" + str(int(no_of_failure_repair * 50)))
 else:
-	print("***** test could not pass, there is drop in the Traffic")
+	print("***** test could not pass, Failover/repair time is high")
 	print("***received traffic on Port1:                    			" + str(port1_RX))
 	print("***sent traffic on Port1::                       			" + str(port1_TX))
 	print("***received traffic on Port2:                    			" + str(port2_RX))
 	print("***sent traffic on Port2:                        			" + str(port2_TX))
 	print("***drop from Port2_AR13 to Port1_AR14:                     	" + str(drop1))
 	print("***drop from Port1_AR14 to port2_AR13:                     	" + str(drop2))
+	print("*** expected failure time is 								" + str(int(no_of_failure_repair * 50)))
 ##############################################################
 #clean up the session, release the ports reserved and cleanup the dbfile
 ##############################################################

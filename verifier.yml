@@ -1,6 +1,6 @@
 ---
 - name: Verify that CCM is up on all ther services
-  hosts: AR13
+  hosts: Aend
   gather_facts: false
   tags: ccm_verify
   connection: network_cli
@@ -23,7 +23,7 @@
     with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID - 1}}" stride="1"
 
 - name: Verify that service is up
-  hosts: AR13
+  hosts: Aend
   gather_facts: false
   tags: service_verify_core0
   connection: network_cli
@@ -45,7 +45,7 @@
     with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID - 1 }}" stride="1"
 
 - name: Verify that service is up
-  hosts: AR13
+  hosts: Aend
   gather_facts: false
   tags: service_verify_core1
   connection: network_cli
@@ -67,7 +67,7 @@
     with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID - 1 }}" stride="1"
 
 - name: Verify that DMM statistics are ok
-  hosts: AR13
+  hosts: Aend
   gather_facts: false
   tags: dmm_verify
   connection: network_cli
@@ -86,7 +86,7 @@
 
 
 - name: Verify that DMM statistics are ok
-  hosts: AR13
+  hosts: Aend
   gather_facts: false
   tags: slm_verify
   connection: network_cli
