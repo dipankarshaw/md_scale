@@ -6,6 +6,9 @@ Multi-Dimension test Case
 "
 # Configuration of services
 ansible-playbook xconnect_scale.yml --tags verify_service
+for i in 1 2
+do
+echo "iteration no $i going on"
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":1,"FF_end_evi_ID":2}' --tags configure_policy
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":1,"FF_end_evi_ID":50,"H_QOS":"YES","Flat_QOS":"NO","CCM_REQUIRED":"n"}' --tags create_ELAN_service
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":150,"Flat_QOS":"YES","CCM_REQUIRED":"y","DM_SL_REQUIRED":"YES"}' --tags create_xc_service
@@ -15,6 +18,8 @@ ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":500,"FF_end_evi_ID":6
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":600,"FF_end_evi_ID":700,"Flat_QOS":"YES","CCM_REQUIRED":"y"}' --tags create_xc_service_CORE1
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":700,"FF_end_evi_ID":800,"Flat_QOS":"YES","CCM_REQUIRED":"y"}' --tags create_xc_service_CORE1
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":800,"FF_end_evi_ID":920,"Flat_QOS":"YES","CCM_REQUIRED":"y"}' --tags create_xc_service_CORE1
+done
+
 echo " ********* Adding a pause for 6 minutes to collect DM/SL stats ********* "
 # Verification of services
 sleep 6m
