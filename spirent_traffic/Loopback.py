@@ -23,16 +23,26 @@ cisco14 = {
 	"device_type": "cisco_xr",
 	}
 
+file_path = os.path.dirname(os.path.realpath(__file__))
 F_vlan = 50
+List1 = ['L1','L2']
+List2 = ['Set','Release']
+interface_name = 'GigabitEthernet0/0/0/11'
+
+
 def Command_Creation(filename, item1,item2, interface_name):
-    with open(filename,'r') as f:
-        Temp = f.read()
-        failure_command = Template(Temp).render(item = interface_name)
-        f.close()
-        file_open = open(str(item1)+"_Loop_"+str(item2)+"_command.txt", 'w+')
-        file_open.write(failure_command)
-        file_open.write('\n')
-        file_open.close()
+	dict_to_render = {
+	'main_inf': interface_name,
+	'sub_if': F_vlan
+	}
+	with open(filename,'r') as f:
+		Temp = f.read()
+		failure_command = Template(Temp).render(**dict_to_render)
+		f.close()
+		file_open = open(file_path + "/commands/" + str(item1)+"_Loop_"+str(item2)+"_command.txt", 'w+')
+		file_open.write(failure_command)
+		file_open.write('\n')
+		file_open.close()
 
 def netmiko_Set_config(item1):
 	print("***** log in to device")
@@ -535,13 +545,13 @@ else:
 #start devices
 ##############################################################
 
-List1 = ['L1','L2']
-List2 = ['Set','Release']
 
-interface_name = 'GigabitEthernet0/0/0/11'
+
+
 for item1 in List1:
 	for item2 in List2:
-		Command_Creation("tem_"+item1+"_Loop_"+item2+"_command.j2", item1,item2 , interface_name)
+		location = file_path + "/templates/"+"tem_"+item1+"_Loop_"+item2+"_command.j2"
+		Command_Creation(location, item1,item2 , interface_name)
 		print("**** Templateing Done for "+str(item1)+" & "+ str(item2)+" command")
 
 

@@ -1,0 +1,6 @@
+exit
+ethernet loopback stop local interface GigabitEthernet0/0/0/11.50 id 1
+configure terminal
+interface GigabitEthernet0/0/0/11.50 l2transport
+no ethernet loopback
+
