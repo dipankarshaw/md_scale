@@ -1,0 +1,6 @@
+interface TenGigE0/0/1/3/2
+shut
+commit
+interface TenGigE0/0/1/3/2
+no shut
+commit

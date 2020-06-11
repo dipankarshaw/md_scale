@@ -2,12 +2,13 @@ from __future__ import print_function
 import time
 from jinja2 import Template
 import os
-cisco14 = {
-	"host": "10.91.126.200",
+cisco13 = {
+	"host": "10.91.126.199",
 	"username": "dshaw1",
 	"password": "N0@ught33b0y",
 	"device_type": "cisco_xr",
 	}
+
 
 F_vlan = 50
 interface_name = 'GigabitEthernet0/0/0/11'
@@ -37,3 +38,7 @@ for item1 in List1:
 		location = file_path + "/templates/"+"tem_"+item1+"_Loop_"+item2+"_command.j2"
 		Command_Creation(location, item1,item2 , interface_name)
 		print("**** Templateing Done for "+str(item1)+" & "+ str(item2)+" command")
+
+
+list3 = ['1518','9100']
+print(list3[0])

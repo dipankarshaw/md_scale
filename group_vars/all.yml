@@ -17,6 +17,8 @@ commands_to_send:
     command: "show ethernet SLA summary"
   - suffix : "_Policy_Map_summary"
     command: "show policy-map targets summary"
+  - suffix : "_Policy_Map_"
+    command: "show policy-map targets"
   - suffix: "_CFM_services"
     command: "show ethernet cfm services"
   - suffix: "_show_run"

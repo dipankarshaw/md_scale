@@ -12,7 +12,10 @@ interface {{ site_list[0].main_interface }}.{{ item }} l2transport rewrite ingre
 {% else -%}
 interface {{ site_list[0].main_interface }}.{{ item }} l2transport encapsulation dot1q {{ item }}
 {% endif -%}
-{% if QOS_REQUIRED == 'YES'and Flat_QOS == 'YES'%}
+{% if QOS_REQUIRED == 'YES'and Flat_QOS == 'YES' and UNIQUE_Policy == 'YES' -%}
+interface {{ site_list[0].main_interface }}.{{ item }} l2transport service-policy input BW-{{ 3000 + item | int }}Kbps-Class-B2-TE
+interface {{ site_list[0].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.marker_policy }}
+{% elif QOS_REQUIRED == 'YES'and Flat_QOS == 'YES'%}
 interface {{ site_list[0].main_interface }}.{{ item }} l2transport service-policy input {{ ingress_policy_flatQOS.marker_shaper_policy }}
 interface {{ site_list[0].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.marker_policy }}
 interface {{ site_list[0].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.shaper_policy }} account user-defined 26
@@ -56,7 +59,10 @@ interface {{ site_list[1].main_interface }}.{{ item }} l2transport rewrite ingre
 {% else -%}
 interface {{ site_list[1].main_interface }}.{{ item }} l2transport encapsulation dot1q {{ item }}
 {% endif -%}
-{% if QOS_REQUIRED == 'YES'and Flat_QOS == 'YES'%}
+{% if QOS_REQUIRED == 'YES'and Flat_QOS == 'YES' and UNIQUE_Policy == 'YES' -%}
+interface {{ site_list[1].main_interface }}.{{ item }} l2transport service-policy input BW-{{ 3000 + item | int }}Kbps-Class-B2-TE
+interface {{ site_list[1].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.marker_policy }}
+{% elif QOS_REQUIRED == 'YES'and Flat_QOS == 'YES'%}
 interface {{ site_list[1].main_interface }}.{{ item }} l2transport service-policy input {{ ingress_policy_flatQOS.marker_shaper_policy }}
 interface {{ site_list[1].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.marker_policy }}
 interface {{ site_list[1].main_interface }}.{{ item }} l2transport service-policy output {{ eggress_policy_flatQOS.shaper_policy }} account user-defined 26

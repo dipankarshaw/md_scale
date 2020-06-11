@@ -17,6 +17,19 @@ interface {{ site_list[1].main_interface }} negotiation auto
 interface {{ site_list[1].main_interface }} load-interval 30
 {% else -%}
 {% endif -%}
+{% if UNIQUE_Policy == 'YES'-%}
+ {% for item in range(FF_start_evi_ID,FF_end_evi_ID) -%}
+ policy-map BW-{{ 3000 + item | int }}Kbps-Class-B2-TE
+ class class-default
+  police rate {{ 3000 + item | int }} kbps burst 100 kbytes
+  !
+  set traffic-class 4
+  set qos-group 2
+ !
+ end-policy-map
+!
+{% endfor %}
+{% else -%}
 policy-map {{ eggress_policy_flatQOS.shaper_policy }}
  class B2-TC4-Egress_DIP
   shape average {{ eggress_policy_flatQOS.Police_rate }} kbps
@@ -261,6 +274,8 @@ class-map match-any NC-MatchQOS
  match qos-group {{ eggress_policy_flatQOS.marker_policy_NC_MatchQOS}}
  end-class-map
 !
+{% endif -%}
+
 {% else -%}
  this is me
 {% endif %}
