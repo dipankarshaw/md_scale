@@ -11,7 +11,7 @@ ANE_ID: "{{ site_list[0].name}}"
 BNE_ID: "{{ site_list[1].name}}"
 MAC_LIMIT: 100
 BD_MTU: 1500
-BUM_BW: 50000
+BUM_BW: 100000
 MAC_FLOOD_ACTION: 'no-flood'
 # applicable values are no-flood, flood, shutdown
 SERVICE_NAME: "{{ ANE_ID }}-{{ BNE_ID }}"
@@ -22,6 +22,7 @@ DM_SL_REQUIRED: 'NO'
 QOS_REQUIRED: 'YES'
 Flat_QOS: 'NO'
 H_QOS: 'YES'
+UNIQUE_Policy: 'NO'
 ingress_policy1: 
   PARENT: P2P_PARENT_HQOS_INGRESS_DIP
   SHAPE: 100
@@ -116,7 +117,7 @@ napalm_provider:
 #     local_MEP: 1
 #     remote_MEP: 2
 #     ESI_ID: 00.00.00.00.00.00.00.00.00
-#     port_type: 'F-type'
+#     port_type: 'Y-type'
 #  -  name: AR6
 #     end: Bend
 #     main_interface: TenGigE0/0/0/19
@@ -125,7 +126,7 @@ napalm_provider:
 #     local_MEP: 2
 #     remote_MEP: 1
 #     ESI_ID: 00.00.00.00.00.00.00.00.00
-#     port_type: 'F-type'
+#     port_type: 'Y-type'
 
 site_list:
  -  name: AR13
@@ -136,7 +137,7 @@ site_list:
     local_MEP: 1
     remote_MEP: 2
     ESI_ID: 00.00.00.00.00.00.00.00.00
-    port_type: 'F-type'
+    port_type: 'X-type'
  -  name: AR14
     end: Bend
     main_interface: GigabitEthernet0/0/0/11
@@ -145,4 +146,25 @@ site_list:
     local_MEP: 2
     remote_MEP: 1
     ESI_ID: 00.00.00.00.00.00.00.00.00
-    port_type: 'F-type'
+    port_type: 'X-type'
+
+
+# site_list:
+#  -  name: AR15
+#     end: Aend
+#     main_interface: TenGigE0/0/0/13
+#     main_interface1: HundredGigE0/0/1/1 #TenGigE0/0/1/5/0
+#     # connected to spirent 11/6
+#     local_MEP: 1
+#     remote_MEP: 2
+#     ESI_ID: 00.00.00.00.00.00.00.00.00
+#     port_type: 'F-type'
+#  -  name: AR16
+#     end: Bend
+#     main_interface: TenGigE0/0/0/13
+#     main_interface1: HundredGigE0/0/1/1 #TenGigE0/0/1/5/0
+#     # connected to spirent 11/10
+#     local_MEP: 2
+#     remote_MEP: 1
+#     ESI_ID: 00.00.00.00.00.00.00.00.00
+#     port_type: 'F-type'
