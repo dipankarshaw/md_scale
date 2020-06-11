@@ -24,7 +24,7 @@ cisco14 = {
 	}
 
 file_path = os.path.dirname(os.path.realpath(__file__))
-F_vlan = 50
+F_vlan = 49
 List1 = ['L1','L2']
 List2 = ['Set','Release']
 interface_name = 'GigabitEthernet0/0/0/11'
@@ -47,7 +47,7 @@ def Command_Creation(filename, item1,item2, interface_name):
 def netmiko_Set_config(item1):
 	print("***** log in to device")
 	net_connect = Netmiko(**cisco14)
-	f = open(str(item1)+"_Loop_Set_command.txt",'r')
+	f = open(file_path + "/commands/" + str(item1)+"_Loop_Set_command.txt",'r')
 	f2 = f.readlines()
 	output = net_connect.send_config_set(f2)
 	net_connect.commit()
@@ -58,7 +58,7 @@ def netmiko_Set_config(item1):
 def netmiko_Release_config(item1):
 	print("***** log in to device")
 	net_connect = Netmiko(**cisco14)
-	f = open(str(item1)+"_Loop_Release_command.txt",'r')
+	f = open(file_path + "/commands/" + str(item1)+"_Loop_Release_command.txt",'r')
 	f2 = f.readlines()
 	output = net_connect.send_config_set(f2)
 	net_connect.commit()
@@ -392,7 +392,7 @@ streamblock_ret1 = sth.traffic_config (
 		vlan_cfi                                         = '0',
 		vlan_tpid                                        = '33024',
 		vlan_id                                          = F_vlan,
-		vlan_user_priority                               = '0',
+		vlan_user_priority                               = '2',
 		enable_control_plane                             = '0',
 		l3_length                                        = '9078',
 		name                                             = 'StreamBlock_F-F',
@@ -424,16 +424,16 @@ streamblock_ret2 = sth.traffic_config (
 		mode                                             = 'create',
 		port_handle                                      = port_handle[0],
 		l2_encap                                         = 'ethernet_ii_vlan',
-		mac_src                                          = '00:10:94:00:02:13',
-		mac_dst                                          = '00:10:94:00:02:13',
+		mac_src                                          = '00:10:94:00:01:13',
+		mac_dst                                          = '00:10:94:00:01:13',
 		vlan_outer_cfi                                   = '0',
 		vlan_outer_tpid                                  = '33024',
-		vlan_outer_user_priority                         = '0',
+		vlan_outer_user_priority                         = '2',
 		vlan_id_outer                                    = '49',
 		vlan_cfi                                         = '0',
 		vlan_tpid                                        = '33024',
 		vlan_id                                          = '50',
-		vlan_user_priority                               = '0',
+		vlan_user_priority                               = '2',
 		enable_control_plane                             = '0',
 		l3_length                                        = '9074',
 		name                                             = 'StreamBlock_X-X',
@@ -581,11 +581,14 @@ for item1 in List1:
     ##############################################################
     #start to get the traffic results
     ##############################################################
-
 	traffic_results_ret = sth.traffic_stats (
 			port_handle                                      = [port_handle[0],port_handle[1]],
-			streams =  [FF_stream],
-			mode                                             = 'detailed_streams');
+			mode                                             = 'all');
+
+	# traffic_results_ret = sth.traffic_stats (
+	# 		port_handle                                      = [port_handle[0],port_handle[1]],
+	# 		streams =  [FF_stream],
+	# 		mode                                             = 'detailed_streams');
 
 	status = traffic_results_ret['status']
 	if (status == '0') :
@@ -593,18 +596,31 @@ for item1 in List1:
 		print(traffic_results_ret)
 	else:
 		print("***** run sth.traffic_stats successfully, and results is:")
-		pprint(traffic_results_ret)
+		#pprint(traffic_results_ret)
+	
 
-	rx = traffic_results_ret[port_handle[0]]['stream'][FF_stream]['rx']['0']['total_pkts']
-	tx = traffic_results_ret[port_handle[0]]['stream'][FF_stream]['tx']['0']['total_pkts']
+	AR13_rx = traffic_results_ret[port_handle[0]]['aggregate']['rx']['pkt_count']
+	AR13_tx = traffic_results_ret[port_handle[0]]['aggregate']['tx']['pkt_count']
+	AR14_rx = traffic_results_ret[port_handle[1]]['aggregate']['rx']['pkt_count']
+	AR14_tx = traffic_results_ret[port_handle[1]]['aggregate']['tx']['pkt_count']
 
-	print("**** No of Rx packets are: " + str(rx))
-	print("**** No of Tx packets are: " + str(tx))
-	if tx == rx :
-		print(" ***************** Test has Passed")
+	print("**** Result is ")
+	print("**** No of Rx packets on AR13 are: " + str(AR13_rx))
+	print("**** No of Tx packets on AR13 are: " + str(AR13_tx))
+	print("**** No of Rx packets on AR14 are: " + str(AR14_rx))
+	print("**** No of Tx packets on AR14 are: " + str(AR14_tx))	
+	print("**** Pass/Fail !! ********  ")
+	# rx = traffic_results_ret[port_handle[0]]['stream'][FF_stream]['rx']['0']['total_pkts']
+	# tx = traffic_results_ret[port_handle[0]]['stream'][FF_stream]['tx']['0']['total_pkts']
+
+
+	if AR13_tx == AR13_rx :
+		print("***************** " + str(item1)+" Test has Passed")
+		print("**** No of Rx packets on AR13 are: " + str(AR13_rx))
+		print("**** No of Tx packets on AR13 are: " + str(AR13_tx))
 	else:
-		print(" ***************** Test has Failed")
-
+		print("***************** " + str(item1)+" Test has Failed")
+		
 	raffic_ctrl_ret = sth.traffic_control(
 		port_handle=[port_handle[0], port_handle[1]],
 		action='clear_stats');

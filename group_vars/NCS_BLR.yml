@@ -137,7 +137,7 @@ site_list:
     local_MEP: 1
     remote_MEP: 2
     ESI_ID: 00.00.00.00.00.00.00.00.00
-    port_type: 'X-type'
+    port_type: 'F-type'
  -  name: AR14
     end: Bend
     main_interface: GigabitEthernet0/0/0/11
@@ -146,7 +146,7 @@ site_list:
     local_MEP: 2
     remote_MEP: 1
     ESI_ID: 00.00.00.00.00.00.00.00.00
-    port_type: 'X-type'
+    port_type: 'F-type'
 
 
 # site_list:
