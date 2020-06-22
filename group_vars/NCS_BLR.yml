@@ -117,16 +117,16 @@ napalm_provider:
 #     local_MEP: 1
 #     remote_MEP: 2
 #     ESI_ID: 00.00.00.00.00.00.00.00.00
-#     port_type: 'Y-type'
-#  -  name: AR6
+#     port_type: 'F-type'
+#  -  name: AR15
 #     end: Bend
-#     main_interface: TenGigE0/0/0/19
+#     main_interface: TenGigE0/0/0/5
 #     main_interface1: HundredGigE0/0/1/1 #TenGigE0/0/1/5/0
 #     # connected to spirent 11/10
 #     local_MEP: 2
 #     remote_MEP: 1
 #     ESI_ID: 00.00.00.00.00.00.00.00.00
-#     port_type: 'Y-type'
+#     port_type: 'F-type'
 
 site_list:
  -  name: AR13

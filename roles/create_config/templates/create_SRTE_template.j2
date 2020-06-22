@@ -1,0 +1,13 @@
+segment-routing traffic-eng segment-list {{policy_name}}-{{color}}
+segment-routing traffic-eng segment-list {{policy_name}}-{{color}} index 1 mpls label 106111
+segment-routing traffic-eng segment-list {{policy_name}}-{{color}} index 2 mpls label 106112
+segment-routing traffic-eng segment-list {{policy_name}}-{{color}} index 3 mpls label 106202
+segment-routing traffic-eng segment-list {{policy_name}}-{{color}}_fallback
+segment-routing traffic-eng segment-list {{policy_name}}-{{color}}_fallback index 1 mpls label 106202
+segment-routing traffic-eng policy {{policy_name}}-{{color}}
+segment-routing traffic-eng policy {{policy_name}}-{{color}} color {{color}} end-point ipv4 {{BNE_RID}}
+segment-routing traffic-eng policy {{policy_name}}-{{color}} candidate-paths
+segment-routing traffic-eng policy {{policy_name}}-{{color}} candidate-paths preference {{Low_pref}}
+segment-routing traffic-eng policy {{policy_name}}-{{color}} candidate-paths preference {{Low_pref}} explicit segment-list {{policy_name}}-{{color}}_fallback
+segment-routing traffic-eng policy {{policy_name}}-{{color}} candidate-paths preference {{High_pref}}
+segment-routing traffic-eng policy {{policy_name}}-{{color}} candidate-paths preference {{High_pref}} explicit segment-list {{policy_name}}-{{color}}

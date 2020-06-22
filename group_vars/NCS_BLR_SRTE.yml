@@ -1,0 +1,40 @@
+---
+colon: ":"
+FF_start_evi_ID: 1400
+FF_end_evi_ID: 1401
+dist: "{{ FF_end_evi_ID|int - FF_start_evi_ID }}"
+location: "{{ Parent_Location }}/roles/create_config/files/"
+ANE_ID: "{{ site_list[0].name}}"
+BNE_ID: "{{ site_list[1].name}}"
+High_pref: 200
+Low_pref: 100
+# applicable values are no-flood, flood, shutdown
+policy_name: "{{ ANE_ID }}-{{ BNE_ID }}-color"
+#Possible values of CCM_required is y or n
+job:
+ - create_SRTE
+ - delete_SRTE
+
+napalm_provider:
+  hostname: '{{ ansible_host }}'
+  username: '{{ ansible_ssh_user }}'
+  dev_os: '{{ ansible_network_os }}'
+  password: '{{ ansible_ssh_pass }}'
+
+site_list:
+ -  name: AR15
+    end: Aend
+    path1_sid_list:
+      - 106111
+      - 106112
+      - 106202
+    path2_sid_list:
+      - 106202
+ -  name: AR16
+    end: Bend
+    path1_sid_list:
+      - 106112
+      - 106111
+      - 106201
+    path2_sid_list:
+      - 106201
