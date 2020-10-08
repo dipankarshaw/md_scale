@@ -133,14 +133,14 @@
       label: "{{ item.0.name }} and {{ item.1 }} from EVI {{ FF_start_evi_ID }} to EVI {{ FF_end_evi_ID }}"
     tags: delete_policy
 
-- name: delete files
-  hosts: localhost
-  gather_facts: no
-  tasks:
-  - shell: |
-      cd {{ location }}
-      rm -rf *.cfg 
-    tags: create_config,create_xc_service,create_ELAN_service,delete_xc_service,delete_ELAN_service,config_policy,delete_policy,delete_xc_service_CORE1,create_xc_service_CORE1
+# - name: delete files
+#   hosts: localhost
+#   gather_facts: no
+#   tasks:
+#   - shell: |
+#       cd {{ location }}
+#       rm -rf *.cfg 
+#     tags: create_config,create_xc_service,create_ELAN_service,delete_xc_service,delete_ELAN_service,config_policy,delete_policy,delete_xc_service_CORE1,create_xc_service_CORE1
 
 - name: spient
   hosts: localhost

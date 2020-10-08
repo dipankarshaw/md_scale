@@ -12,8 +12,8 @@ echo "iteration no $i going on"
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":1,"FF_end_evi_ID":2}' --tags configure_policy
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":1,"FF_end_evi_ID":50,"H_QOS":"YES","Flat_QOS":"NO","CCM_REQUIRED":"n"}' --tags create_ELAN_service
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":150,"Flat_QOS":"YES","UNIQUE_Policy":"YES","CCM_REQUIRED":"y","DM_SL_REQUIRED":"YES"}' --tags configure_policy,create_xc_service
-ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":150,"FF_end_evi_ID":300,"Flat_QOS":"YES","UNIQUE_Policy":"YES","CCM_REQUIRED":"y"}' --tags configure_policy,create_xc_service
-ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":300,"FF_end_evi_ID":420,"Flat_QOS":"YES","CCM_REQUIRED":"y"}' --tags create_xc_service
+ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":150,"FF_end_evi_ID":295,"Flat_QOS":"YES","UNIQUE_Policy":"YES","CCM_REQUIRED":"y"}' --tags configure_policy,create_xc_service
+ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":295,"FF_end_evi_ID":420,"Flat_QOS":"YES","CCM_REQUIRED":"y"}' --tags create_xc_service
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":500,"FF_end_evi_ID":600,"Flat_QOS":"YES","CCM_REQUIRED":"y"}' --tags create_xc_service_CORE1
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":600,"FF_end_evi_ID":700,"Flat_QOS":"YES","CCM_REQUIRED":"y"}' --tags create_xc_service_CORE1
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":700,"FF_end_evi_ID":800,"Flat_QOS":"YES","CCM_REQUIRED":"y"}' --tags create_xc_service_CORE1
@@ -54,8 +54,8 @@ python3 repair.py
 cd ..
 #Deletion of services.
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":1,"FF_end_evi_ID":50,"H_QOS":"YES","Flat_QOS":"NO","CCM_REQUIRED":"n"}' --tags delete_ELAN_service
-ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":300,"Flat_QOS":"YES","CCM_REQUIRED":"y"}' --tags delete_xc_service,delete_policy
-ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":300,"FF_end_evi_ID":420,"Flat_QOS":"YES","CCM_REQUIRED":"y"}' --tags delete_xc_service
+ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":50,"FF_end_evi_ID":295,"Flat_QOS":"YES","UNIQUE_Policy":"YES","CCM_REQUIRED":"y"}' --tags delete_xc_service,delete_policy
+ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":295,"FF_end_evi_ID":420,"Flat_QOS":"YES","CCM_REQUIRED":"y"}' --tags delete_xc_service
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":500,"FF_end_evi_ID":700,"QOS_REQUIRED":'YES',"Flat_QOS":"YES","CCM_REQUIRED":"y"}' --tags delete_xc_service_CORE1
 ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":700,"FF_end_evi_ID":920,"QOS_REQUIRED":'YES',"Flat_QOS":"YES","CCM_REQUIRED":"y"}' --tags delete_xc_service_CORE1
 #ansible-playbook xconnect_scale.yml -e '{"FF_start_evi_ID":1,"FF_end_evi_ID":2}' --tags delete_policy

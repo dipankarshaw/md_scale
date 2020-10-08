@@ -1,0 +1,301 @@
+
+PLAY [Verify that CCM is up on all ther services] ********************************************************************************************
+
+TASK [iosxr_command] *************************************************************************************************************************
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_1
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 47'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100001'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_1 in group AR15-AR5_DIP_FF_1
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_2
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 48'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100002'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_2 in group AR15-AR5_DIP_FF_2
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_3
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 49'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100003'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_3 in group AR15-AR5_DIP_FF_3
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_4
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 50'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100004'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_4 in group AR15-AR5_DIP_FF_4
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_5
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 51'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100005'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_5 in group AR15-AR5_DIP_FF_5
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_6
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 52'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100006'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_6 in group AR15-AR5_DIP_FF_6
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_7
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 53'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100007'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_7 in group AR15-AR5_DIP_FF_7
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_8
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 54'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100008'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_8 in group AR15-AR5_DIP_FF_8
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_9
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 55'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100009'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_9 in group AR15-AR5_DIP_FF_9
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_10
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 56'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100010'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_10 in group AR15-AR5_DIP_FF_10
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_11
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 57'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100011'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_11 in group AR15-AR5_DIP_FF_11
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_12
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 58'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100012'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_12 in group AR15-AR5_DIP_FF_12
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_13
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 59'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100013'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_13 in group AR15-AR5_DIP_FF_13
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_14
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 60'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100014'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_14 in group AR15-AR5_DIP_FF_14
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_15
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 61'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100015'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_15 in group AR15-AR5_DIP_FF_15
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_16
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 62'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100016'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_16 in group AR15-AR5_DIP_FF_16
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_17
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 63'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100017'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_17 in group AR15-AR5_DIP_FF_17
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_18
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 64'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100018'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_18 in group AR15-AR5_DIP_FF_18
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_19
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 65'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100019'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_19 in group AR15-AR5_DIP_FF_19
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_20
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 66'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100020'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_20 in group AR15-AR5_DIP_FF_20
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_21
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 67'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100021'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_21 in group AR15-AR5_DIP_FF_21
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_22
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 68'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100022'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_22 in group AR15-AR5_DIP_FF_22
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_23
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 69'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100023'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_23 in group AR15-AR5_DIP_FF_23
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_24
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 70'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100024'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_24 in group AR15-AR5_DIP_FF_24
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_25
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 71'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100025'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_25 in group AR15-AR5_DIP_FF_25
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_26
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 72'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100026'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_26 in group AR15-AR5_DIP_FF_26
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )
+ok: [AR15] => (item=*************
+ -   - Summary for Domain COLT-1 (level 1), Service AR15-AR5_DIP_FF_27
+    - =============================================================================
+    - 'Domain MIB index: 1, Service MIB index: 73'
+    - 'Domain ID: NULL, Service ID: ICC-based: LEXXX-100027'
+    - Service configured on P2P cross-connect AR15-AR5_DIP_FF_27 in group AR15-AR5_DIP_FF_27
+    - 'CCM interval: 1s'
+    - 'Local MEPs: 1 total: all operational, no errors'
+    - 'Peer MEPs: 1 total: all operational, no errors'
+    - 'MIPs: 0, MIP creation rule: none'
+ )

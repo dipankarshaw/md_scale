@@ -30,33 +30,178 @@ interface {{ site_list[1].main_interface }} load-interval 30
 !
 {% endfor %}
 {% else -%}
-policy-map {{ eggress_policy_flatQOS.shaper_policy }}
- class B2-TC4-Egress_DIP
-  shape average {{ eggress_policy_flatQOS.Police_rate }} kbps
- !
- class class-default
- !
- end-policy-map
-!
-class-map match-any B2-TC4-Egress_DIP
- match traffic-class 4
- end-class-map
-!
+{% if OQS_TYPE == 'Business2'-%}
 policy-map {{ ingress_policy_flatQOS.marker_shaper_policy }}
- class BUSINESS2-PCP-2_DIP
-  police rate {{ ingress_policy_flatQOS.Police_rate }} kbps burst 1100 kbytes
+ class {{ingress_policy_flatQOS.class_map}}
+  {% if side == 'Aend' and 'Bundle' in site_list[0].main_interface and Bundle_mode_percentage -%}
+  police rate percent {{  Flat_QOS_Police_rate * 100 // total_BW }} burst 1100 kbytes
+  {% elif side == 'Bend' and 'Bundle' in site_list[1].main_interface and Bundle_mode_percentage -%}
+  police rate percent {{  Flat_QOS_Police_rate * 100 // total_BW }} burst 1100 kbytes
+  {% else -%}
+  police rate {{ Flat_QOS_Police_rate }} kbps burst 1100 kbytes
+  {% endif -%}
   !
-  set traffic-class {{ ingress_policy_flatQOS.TC }}
-  set qos-group {{ ingress_policy_flatQOS.QOSG }}
+  set traffic-class 4
+  set qos-group 2
  !
  class class-default
  !
  end-policy-map
 !
-class-map match-any BUSINESS2-PCP-2_DIP
+class-map match-any {{ingress_policy_flatQOS.class_map}}
  match cos 2
  end-class-map
 !
+policy-map {{ eggress_policy_flatQOS.shaper_policy }}
+ class {{eggress_policy_flatQOS.class_map}}
+  shape average {{ Flat_QOS_Police_rate }} kbps
+ !
+ class class-default
+ !
+ end-policy-map
+!
+class-map match-any {{eggress_policy_flatQOS.class_map}}
+ match traffic-class 4
+ end-class-map
+!
+{% elif OQS_TYPE == 'Premium'-%}
+policy-map {{ ingress_policy_flatQOS.marker_shaper_policy }}
+ class {{ingress_policy_flatQOS.class_map}}
+  {% if side == 'Aend' and 'Bundle' in site_list[0].main_interface and Bundle_mode_percentage -%}
+  police rate percent {{  Flat_QOS_Police_rate * 100 // total_BW }} burst 1100 kbytes
+  {% elif side == 'Bend' and 'Bundle' in site_list[1].main_interface and Bundle_mode_percentage -%}
+  police rate percent {{  Flat_QOS_Police_rate * 100 // total_BW }} burst 1100 kbytes
+  {% else -%}
+  police rate {{ Flat_QOS_Police_rate }} kbps burst 1100 kbytes
+  {% endif -%}
+  !
+  set traffic-class 6
+  set qos-group 5
+ !
+ class class-default
+ !
+ end-policy-map
+!
+class-map match-any {{ingress_policy_flatQOS.class_map}}
+ match cos 5
+ end-class-map
+!
+policy-map {{ eggress_policy_flatQOS.shaper_policy }}
+ class {{eggress_policy_flatQOS.class_map}}
+  shape average {{ Flat_QOS_Police_rate }} kbps
+ !
+ class class-default
+ !
+ end-policy-map
+!
+class-map match-any {{eggress_policy_flatQOS.class_map}}
+ match traffic-class 6
+ end-class-map
+!
+{% elif OQS_TYPE == 'Business3'-%}
+policy-map {{ ingress_policy_flatQOS.marker_shaper_policy }}
+ class {{ingress_policy_flatQOS.class_map}}
+  {% if side == 'Aend' and 'Bundle' in site_list[0].main_interface  and Bundle_mode_percentage-%}
+  police rate percent {{  Flat_QOS_Police_rate * 100 // total_BW }} burst 1100 kbytes
+  {% elif side == 'Bend' and 'Bundle' in site_list[1].main_interface and Bundle_mode_percentage -%}
+  police rate percent {{  Flat_QOS_Police_rate * 100 // total_BW }} burst 1100 kbytes
+  {% else -%}
+  police rate {{ Flat_QOS_Police_rate }} kbps burst 1100 kbytes
+  {% endif -%}
+  !
+  set traffic-class 3
+  set qos-group 1
+ !
+ class class-default
+ !
+ end-policy-map
+!
+class-map match-any {{ingress_policy_flatQOS.class_map}}
+ match cos 1
+ end-class-map
+!
+policy-map {{ eggress_policy_flatQOS.shaper_policy }}
+ class {{eggress_policy_flatQOS.class_map}}
+  shape average {{ Flat_QOS_Police_rate }} kbps
+ !
+ class class-default
+ !
+ end-policy-map
+!
+class-map match-any {{eggress_policy_flatQOS.class_map}}
+ match traffic-class 3
+ end-class-map
+!
+{% elif OQS_TYPE == 'Standard'-%}
+policy-map {{ ingress_policy_flatQOS.marker_shaper_policy }}
+ class {{ingress_policy_flatQOS.class_map}}
+  {% if side == 'Aend' and 'Bundle' in site_list[0].main_interface and Bundle_mode_percentage -%}
+  police rate percent {{ Flat_QOS_Police_rate * CIR_percentage// total_BW }} burst 1200 kbytes peak-rate percent {{ Flat_QOS_Police_rate * 100 // total_BW }} peak-burst 1000 kbytes
+  {% elif side == 'Bend' and 'Bundle' in site_list[1].main_interface and Bundle_mode_percentage -%}
+  police rate percent {{  Flat_QOS_Police_rate * CIR_percentage// total_BW }} burst 1200 kbytes peak-rate percent {{ Flat_QOS_Police_rate * PIR_percentage// total_BW }} peak-burst 1000 kbytes
+  {% else -%}
+  police rate {{ Flat_QOS_Police_rate* CIR_percentage //100 }} kbps burst 1200 kbytes peak-rate {{ Flat_QOS_Police_rate }} kbps peak-burst 1000 kbytes
+  {% endif -%}
+  !
+  set traffic-class 2
+  set qos-group 4
+ !
+ class class-default
+ !
+ end-policy-map
+!
+class-map match-any {{ingress_policy_flatQOS.class_map}}
+ match cos 4 7
+ end-class-map
+!
+policy-map {{ eggress_policy_flatQOS.shaper_policy }}
+ class {{eggress_policy_flatQOS.class_map}}
+  shape average {{ Flat_QOS_Police_rate }} kbps
+ !
+ class class-default
+ !
+ end-policy-map
+!
+class-map match-any {{eggress_policy_flatQOS.class_map}}
+ match traffic-class 2
+ end-class-map
+!
+{% elif OQS_TYPE == 'Business1'-%}
+policy-map {{ ingress_policy_flatQOS.marker_shaper_policy }}
+ class {{ingress_policy_flatQOS.class_map}}
+  {% if side == 'Aend' and 'Bundle' in site_list[0].main_interface and Bundle_mode_percentage -%}
+  police rate percent {{  Flat_QOS_Police_rate * 100 // total_BW }} burst 1100 kbytes
+  {% elif side == 'Bend' and 'Bundle' in site_list[1].main_interface and Bundle_mode_percentage -%}
+  police rate percent {{  Flat_QOS_Police_rate * 100 // total_BW }} burst 1100 kbytes
+  {% else -%}
+  police rate {{ Flat_QOS_Police_rate }} kbps burst 1100 kbytes
+  {% endif -%}
+  !
+  set traffic-class 5
+  set qos-group 3
+ !
+ class class-default
+ !
+ end-policy-map
+!
+class-map match-any {{ingress_policy_flatQOS.class_map}}
+ match cos 3
+ end-class-map
+!
+policy-map {{ eggress_policy_flatQOS.shaper_policy }}
+ class {{eggress_policy_flatQOS.class_map}}
+  shape average {{ Flat_QOS_Police_rate }} kbps
+ !
+ class class-default
+ !
+ end-policy-map
+!
+class-map match-any {{eggress_policy_flatQOS.class_map}}
+ match traffic-class 5
+ end-class-map
+!
+{% else -%}
+{% endif -%}
 policy-map {{ eggress_policy_flatQOS.marker_policy}}
  class Premium-MatchQOS
   set cos {{ eggress_policy_flatQOS.marker_policy_Premium_SETCOS }}

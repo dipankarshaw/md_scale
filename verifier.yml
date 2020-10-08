@@ -66,10 +66,28 @@
       #pause: 3
     with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID - 1 }}" stride="1"
 
-- name: Verify that DMM statistics are ok
+- name: Verify that DMM statistics are ok at B end
+  hosts: Bend
+  gather_facts: false
+  tags: dmm_verifyB
+  connection: network_cli
+  tasks:
+  - iosxr_command:
+      host: "{{ ansible_host }}"
+      username: '{{ ansible_ssh_user }}'
+      commands: 
+          - show ethernet sla statistics interface {{ site_list[1].main_interface }}.{{item}} profile DMM2 | utility egrep 'Min\|Source\|Round\|Pkts\|warning'
+    register: output
+    loop_control:
+      label: "*******************\n\n\n
+      {{ output.stdout_lines | to_nice_yaml}} \n\n\n"
+      # pause: 1
+    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID - 1 }}" stride="1"
+
+- name: Verify that DMM statistics are ok at A end
   hosts: Aend
   gather_facts: false
-  tags: dmm_verify
+  tags: dmm_verifyA
   connection: network_cli
   tasks:
   - iosxr_command:
@@ -85,10 +103,10 @@
     with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID - 1 }}" stride="1"
 
 
-- name: Verify that DMM statistics are ok
+- name: Verify that DMM statistics are ok at A end
   hosts: Aend
   gather_facts: false
-  tags: slm_verify
+  tags: slm_verifyA
   connection: network_cli
   tasks:
   - iosxr_command:
@@ -96,6 +114,24 @@
       username: '{{ ansible_ssh_user }}'
       commands: 
            - show ethernet sla statistics interface {{ site_list[0].main_interface }}.{{item}} profile SLM2 | utility egrep 'Min\|Source\|Pkts\|warning'
+    register: output
+    loop_control:
+      label: "*******************\n\n\n
+      {{ output.stdout_lines | to_nice_yaml}}\n\n\n"
+      # pause: 1
+    with_sequence: start="{{ FF_start_evi_ID }}" end="{{ FF_end_evi_ID - 1 }}" stride="1"
+
+- name: Verify that DMM statistics are ok at B end
+  hosts: Bend
+  gather_facts: false
+  tags: slm_verifyB
+  connection: network_cli
+  tasks:
+  - iosxr_command:
+      host: "{{ ansible_host }}"
+      username: '{{ ansible_ssh_user }}'
+      commands: 
+           - show ethernet sla statistics interface {{ site_list[1].main_interface }}.{{item}} profile SLM2 | utility egrep 'Min\|Source\|Pkts\|warning'
     register: output
     loop_control:
       label: "*******************\n\n\n

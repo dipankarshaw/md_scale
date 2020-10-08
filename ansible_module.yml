@@ -1,0 +1,4 @@
+---
+- name: my custom module
+  hosts: localhost
+  gather

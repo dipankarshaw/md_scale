@@ -10,8 +10,8 @@ import sys
 import re
 from pprint import pprint
 
-list1 = [1518,9100]
-list2 = [80,90,100]
+list1 = ['128','512','1518','9100']
+list2 = ['60','70','80','90','100']
 
 
 ##############################################################
@@ -306,7 +306,7 @@ rfc_cfg0 = sth.test_rfc2544_config (
 		resolution                                       = '1',
 		learning_mode                                    = 'l3',
 		rate_upper_limit                                 = '100',
-		frame_size                                       = ['1518','9100'],
+		frame_size                                       = list1,
 		enable_latency_threshold                         = '0',
 		enable_detailresults                             = '1',
 		rate_step                                        = '10',
@@ -327,7 +327,7 @@ rfc_cfg0 = sth.test_rfc2544_config (
 		search_mode                                      = 'step',
 		enable_seq_threshold                             = '0',
 		l3_learning_retry_count                          = '5',
-		initial_rate                                     = '80');
+		initial_rate                                     = list2[0])
 
 status = rfc_cfg0['status']
 if (status == '0') :
@@ -344,7 +344,7 @@ else:
 
 ctrl_ret1 = sth.test_rfc2544_control (
 		action                                           = 'run',
-		wait                                             = '1');
+		wait                                             = '1')
 
 status = ctrl_ret1['status']
 if (status == '0') :

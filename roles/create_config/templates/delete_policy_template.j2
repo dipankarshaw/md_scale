@@ -7,8 +7,8 @@ no policy-map BW-{{3000 + item | int }}Kbps-Class-B2-TE
 no policy-map {{ ingress_policy_flatQOS.marker_shaper_policy }}
 no policy-map {{ eggress_policy_flatQOS.shaper_policy }}
 no policy-map {{ eggress_policy_flatQOS.marker_policy }}
-no class-map B2-TC4-Egress_DIP
-no class-map BUSINESS2-PCP-2_DIP
+no class-map {{ ingress_policy_flatQOS.class_map }}
+no class-map {{ eggress_policy_flatQOS.class_map }}
 no policy-map {{ ingress_policy1.PARENT }}
 no policy-map {{ eggress_policy1.PARENT }}
 no policy-map {{ ingress_policy1.CHILD }}
